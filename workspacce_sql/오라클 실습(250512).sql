@@ -80,3 +80,8 @@ select EMPNO AS EMPLOYEE_NO,
         DEPTNO AS DEPARTMENT_NO
 from EMP
 ORDER BY DEPTNO DESC, ENAME ASC;
+
+
+-- where절
+select * from EMP
+where DEPTNO = 30;
