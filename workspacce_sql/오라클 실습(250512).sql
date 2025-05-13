@@ -1,0 +1,82 @@
+-- 250512
+
+-- 한 줄 주석
+/* 범위 주석 */
+/* 
+    여러 줄
+    주석
+*/
+
+select * from emp; -- emp 테이블을 불러옴 
+select * from dept; -- dept 테이블을 불러옴 
+select * from salgrade; -- salgrade 테이블을 불러옴 
+
+select EMPNO, ENAME, DEPTNO -- EMP 테이블에 있는 empno, ename, deptno 열을 불러옴
+    from EMP; -- 여러 사람이 보기 좋게 줄바꿈을 넣음 
+
+-- 이름과 급여만 출력
+select ENAME, SAL
+    from EMP;
+
+select ENAME, SAL,
+    123, 'a' /* 내가 원하는 데이터 값을 넣을 수 있음 */
+    from EMP;
+    
+-- DISTINCT : 중복 데이터 삭제 
+select 
+    deptno 
+from emp;
+    
+select 
+    distinct deptno
+from emp;
+
+select 
+   distinct job, deptno
+from emp; /* job과 deptno에서 중복되는 일부 데이터만 출력됨 */
+
+select 
+   /*distinct*/ job, deptno
+from emp; 
+
+-- 열과 연산식
+select ename, sal, sal*12+comm, comm
+from emp;
+
+-- column의 별칭 지정하기
+select ename, sal, 
+    sal*12+comm as S1,
+    sal*12+comm S2, 
+    sal*12+comm "s s",  -- sql에서 유일하게 ""를 사용 : 별칭 지정할 때
+    comm as 추가수당
+from emp;
+
+-- 250513
+--ORDER BY (Order: 정렬하다)
+select * from EMP
+order by SAL; -- 자동으로 오름차순으로 정렬됨. 생략가능. 오름차순 : ASC(ascending) 
+    -- 오름차순 : 작은 것부터 큰 것 순서로 정렬
+
+select * from EMP
+order by SAL desc; -- 내림차순 : desc(descending)
+
+select * from EMP  -- 가장 먼저 입사한 순서로 출력
+order by HIREDATE;
+
+select * from EMP  -- 부서명 오름차순->급여 내림차순으로 정렬하기
+order by DEPTNO asc, SAL desc; -- 부서명이 동일할 시 급여 내림차순으로 정렬됨
+
+select * from EMP  -- 부서명 오름차순->급여 내림차순->사원번호 내림차순으로 정렬하기
+order by DEPTNO asc, SAL desc, EMPNO desc; 
+
+-- 책 97쪽 3번 문제
+select EMPNO AS EMPLOYEE_NO, 
+        ENAME AS EMPLOYEE_NAME,
+        JOB,
+        MGR AS MANAGER,
+        HIREDATE,
+        SAL AS SALARY,
+        COMM AS COMISSION,
+        DEPTNO AS DEPARTMENT_NO
+from EMP
+ORDER BY DEPTNO DESC, ENAME ASC;
