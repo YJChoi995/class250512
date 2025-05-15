@@ -1,4 +1,4 @@
-/* 250512 */
+/* 250512(월) 1일차 */
 -- 한 줄 주석
 /* 범위 주석 */
 /* 
@@ -52,7 +52,7 @@ from emp;
 
 
 
-/* 250513 */
+/* 250513(화) */
 /* ORDER BY (Order: 정렬하다) */
 select * from EMP
 order by SAL; -- 자동으로 오름차순으로 정렬됨. 생략가능. 오름차순 : ASC(ascending) 
@@ -153,7 +153,7 @@ where DEPTNO not in(10, 20);
 
 
 
-/* 250514 */
+/* 250514(수) */
 -- 퀴즈
 /* 1. 부서 번호 10번인 사람들을 출력 */
 select * from EMP
@@ -431,3 +431,17 @@ where (sal > 2000 and sal < 3000)
 /* 문제 5
 조건 : 급여(SAL)가 1000 이상 3000 이하 범위에 해당하지 않는 직원 중에서, 직책(JOB)이 'CLERK' 또는 'SALESMAN'인 직원들을 조회하라.
 제약: `BETWEEN`, `NOT BETWEEN`, `IN` 사용 금지 */
+select * from EMP
+where (SAL > 1000 or SAL < 3000)
+and (JOB = 'CLERK' or JOB = 'SALESMAN');
+
+
+/* 250515(목) */
+/* substr 함수 */
+select JOB, substr(JOB,1,2), substr(JOB,3,2), substr(JOB,5) from EMP;
+
+select JOB,
+    substr(JOB, -length(JOB)),
+    substr(JOB, -length(JOB), 2),
+    substr(JOB, -3)
+from EMP;
