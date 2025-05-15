@@ -280,6 +280,7 @@ union all
 select ENAME from EMP; -- 출력시 컬럼의 타입(숫자, 문자)이 같지 않아 출력되지 않음
 
 
+
 /* 교재 130,131쪽 문제 */
 -- Q1. EMP 테이블을 사용하여 사원 이름(ENAME)이 S로 끝나는 사원 데이터를 모두 출력
 select * from EMP
@@ -436,12 +437,179 @@ where (SAL > 1000 or SAL < 3000)
 and (JOB = 'CLERK' or JOB = 'SALESMAN');
 
 
+
 /* 250515(목) */
-/* substr 함수 */
+-- 복습 
+-- 부서 10번을 사원번호 내림차순으로 정렬하여 출력
+select * from EMP where DEPTNO = 10
+order by EMPNO desc;
+-- 부서 20번을 사원번호 오름차순으로 정렬하여 출력
+select * from EMP where DEPTNO = 20 
+order by EMPNO asc;
+-- union all 할 때 order by를 여러번쓸수없음. 내림차순 오름차순이 다르면 할 수 없음
+
+
+/* SUBSTR 함수 */
 select JOB, substr(JOB,1,2), substr(JOB,3,2), substr(JOB,5) from EMP;
 
+-- 사원 이름을 두번째부터 세글자만 출력
+select ENAME, substr(ENAME, 2, 3) from EMP;
+
+select substr(ename, 20, 300) from EMP; -- 실제 문자 길이보다 넘어가면 null
+
+-- 음수가 들어가면 오른쪽부터 계산
+select JOB, substr(JOB, -3, 2) from EMP;
+-- 이름의 마지막 3글자만 출력하기
+select ENAME, substr(ENAME, -3) from EMP;
+
+-- length(글자수)(값이 숫자로 변환)와 같이 사용 가능
 select JOB,
-    substr(JOB, -length(JOB)),
+    substr(JOB, -length(JOB)), -- 음수로 시작하여 JOB의 시작부분으로 지정 가능
     substr(JOB, -length(JOB), 2),
     substr(JOB, -3)
+from EMP;
+
+/* REPLACE 함수 */
+select '010-1234-5678' as REPLACE_BEFORE,  
+        replace('010-1234-5678', '-', ' ') as REPLACE_1,
+        replace('010-1234-5678', '-') as REPLACE_2
+from DUAL;
+
+-- 대문자 A를 '-'모두 교체
+select ENAME, replace(ENAME, 'A', '-') as REPLACE
+from EMP;
+
+select '구글' as REPLACE_BEFORE,  
+        replace('구글', '구글', 'Google') as REPLACE_1
+from DUAL;
+
+
+/* LPAD, RPAD 함수 */
+select ENAME,
+    lpad(ENAME, 10, '#') as LPAD_1,
+    rpad(ENAME, 10, '#') as rPAD_2,
+    lpad(ENAME, 10) as LPAD_2,
+    rpad(ENAME, 10) as rPAD_2
+from EMP;
+
+select rpad('000101-', 14, '*'),
+        rpad('010-1234-', 13, '*')
+from dual;
+
+-- 문제 1 : ENAME의 앞 두글자만 출력
+select ENAME, lpad(ENAME, 2) from EMP;
+select ENAME, substr(ENAME, 1,2) from EMP;
+
+-- 문제 2 
+-- 앞의 두글자만 원본을 출력하고 나머지는 4개의 *로 표시) 
+select ENAME, rpad(substr(ENAME, -length(ENAME),2), 6, '*') from EMP;
+select ENAME, rpad(substr(ENAME, 1, 2), 6, '*') from EMP;
+
+-- 문제 3 
+-- 사원 이름 두 글자만 보이고 나머지는 *로 , 단 원래 이름 만큼 길이 표시 
+select ENAME, rpad(substr(ENAME, -length(ENAME), 2), Length(ENAME), '*') from EMP;
+select ENAME, rpad(substr(ENAME, 1, 2), Length(ENAME), '*') from EMP;
+
+-- 심화 문제 1 
+-- 이름을 총 20자 중 가운데 정렬
+--(내가 막힌 것)
+select JOB,
+        rpad(lpad(JOB, 20 - length(JOB)), 20) as 가운데정렬
+from EMP;
+--(챗지피티 답)
+SELECT JOB,
+       RPAD(LPAD(JOB, 20/2 + LENGTH(JOB)/2), 20) AS 가운데정렬
+FROM EMP;
+
+/* CONCAT 함수 */
+--  2개의 문자열 데이터를 하나로 연결
+select concat(EMPNO, ENAME) from EMP;
+
+select 'ab' || 'cd' from DUAL;
+select EMPNO || ENAME from EMP;
+select EMPNO || ' : ' || ENAME from EMP;
+
+/* TRIM 함수 */
+-- 앞 뒤의 공백을 자른다
+select '   ab c   ', trim('   ab c   ') from dual;
+
+/* ROUND 함수 (반올림)*/
+select round(14.46), -- 숫자 뒤에 아무것도 입력 안 하면 자동으로 0의 자리에서 반올림
+    round(14.46, 0), -- 14 / 0의 자리에서 반올림
+    round(14.46, 1), -- 14.5 / 소수점 1의 자리에서 반올림
+    round(14.46, -1) -- 10 / 1의 자리에서 반올림
+from dual;
+    
+/* TRUNC 함수(버림) */
+select trunc(14.46), -- 숫자 뒤에 아무것도 입력 안 하면 자동으로 0의 자리에서 버림
+    trunc(14.46, 0), -- 14
+    trunc(14.46, 1), -- 14.4 / 소수점 1의 자리에서 버림
+    trunc(14.46, -1) -- 14.4 / 양수 1의 자리에서 버림
+from dual;
+    
+/* CEIL, FLOOR 함수 */
+-- 올림, 내림 함수(반올림, 반내림과 다름)
+select ceil(3.14), -- 4(1의 자리에서 올림)
+    floor(3.14), -- 3(1의 자리에서 내림)
+    ceil(-3.14), 
+    floor(-3.14)
+from dual;
+
+/* MOD 함수 */
+-- 나머지를 구함
+select 7 / 3 from dual;
+select 7 / 0 from dual; -- 0으로 나누면 무한대로 연산하게 됨
+
+select mod(7, 3), mod(8, 3), mod(9, 3) from dual; -- 나머지는 몫을 넘지 못함
+
+/* 날짜 함수 */
+-- SYSDATE(OS의 현재 날짜)
+select sysdate as now from dual;
+
+/* 자료형 변환 함수 */
+select EMPNO, EMPNO + '1000' from EMP; -- 문자지만 숫자로 이루어진 문자라면 연산 가능
+select EMPNO, EMPNO + 'a' from EMP; -- 숫자 + 문자는 에러남
+select 'a' + 'b' from dual; -- 연산자는 숫자에만 적용됨. 문자형은 에러남.
+select 'a' || 'b' from dual; -- ||(파이프)로 문자 합치기 
+
+-- TO_CHAR 함수 : 날짜,숫자 데이터를 문자열 데이터로 전환
+select to_char(sysdate, 'yyyy/mm/dd hh24:mi:ss') as 현재날짜시간
+from dual;
+
+select to_char(sysdate, 'yyyy"년" mm"월" dd"일" hh24"시" mi"분" ss"초"') as 현재날짜시간
+from dual;
+
+select to_char(HIREDATE, 'yyyy"년" mm"월" dd"일"') as 입사날짜 from EMP;
+
+select to_char(SAL, '$999,999') from EMP; 
+
+-- TO_NUMBER 함수 : 숫자 데이터로 전환
+select to_number('1,300', '999,999') - to_number('1,500', '999,999') from dual; 
+
+-- TO_NUMBER 함수 : 문자열 데이터를 날짜 데이터로 전환
+select to_date('20250515', 'yyyy-mm-dd') from dual;
+select to_date('19990528', 'yyyy-mm-dd') - to_date(sysdate, 'yyyy-mm-dd') from dual;
+
+select * from EMP
+where HIREDATE > to_date('19810601', 'yyyy-mm-dd');
+
+select * from EMP
+where HIREDATE > '81-06-01';
+
+/* NULL 처리 함수 */
+-- NVL 함수
+-- 첫번째 입력 데이터가 null이 아니면 그 데이터를 그대로 사용하고, null이면 두번째 입력 데이터로 변경함
+-- 계산이 가능해짐
+select SAL*12 + COMM from EMP; -- null이 그대로 출력
+select (SAL*12 + nvl(COMM, 0)) as 연봉 from EMP;
+
+-- NVL2 함수 : 널이 아닌 값과 널인 값을 각각 지정 가능함
+select sal, nvl2(comm, 'o', 'X') from emp;
+
+/* 복습 */
+-- 사원 이름을 총 20자 중 가운데 정렬
+select ENAME, 
+    (rpad(lpad(ENAME, 20/2 + length(ENAME)/2), 20)) as NAME
+-- lpad로 사원이름 왼쪽 10칸 먼저 차지 + 사원이름의 길이의 반 만큼 차지 + 사원 이름
+-- 이것을 오른쪽 정렬로 
 from EMP;
