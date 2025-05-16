@@ -613,3 +613,244 @@ select ENAME,
 -- lpad로 사원이름 왼쪽 10칸 먼저 차지 + 사원이름의 길이의 반 만큼 차지 + 사원 이름
 -- 이것을 오른쪽 정렬로 
 from EMP;
+
+
+/* 250516 */
+-- 복습 문제: 각 사원의 연봉을 출력
+select ENAME, SAL*12 + NVL(COMM,0) as total_pay 
+from EMP;
+
+/* DECODE 함수 */
+-- 기준 데이터와 비교하여 다른 결괏값을 출력
+select EMPNO, ENAME, JOB, SAL,
+    decode(JOB,
+            'MANAGER', SAL*1.1,
+            'SALESMAN', SAL*1.05,
+            'ANALYST', SAL,
+            SAL*1.03) as UPSAL
+from EMP;
+
+/* CASE 함수 */
+-- 비교 데이터 필요 X, 각 조건식이 참/거짓인지만 검사
+select EMPNO, ENAME, JOB, SAL, 
+    case JOB when 'MANAGER' then SAL*1.1
+            when 'SALESMAN' then SAL*1.05
+            when 'ANALYST' then SAL
+            else SAL*1.03
+    end as UPSAL
+from EMP;
+
+-- nvl 사용하지 않고 decode, case로 nvl이랑 동일한 결과 출력하기
+select nvl(COMM, -1) as nvl,
+        decode(COMM, 
+                null,-1,
+                COMM) as decode,
+        case COMM when null then -1
+            else COMM
+        end as case
+from EMP;
+
+
+select EMPNO, ENAME, COMM,
+    case when COMM is null then '해당 사항 없음'
+            when COMM = 0 then '수당 없음'
+            when COMM > 0 then '수당 : ' || COMM
+    end as COMM_TEXT
+from EMP;
+
+
+/* 교재 179, 180쪽 문제 */
+/* Q1. EMPNO 열에는 EMP 테이블에서 사원 이름이 다섯 글자 이상이며 여섯 글자 미만인 사원 정보를 출력
+        MASKING_EMPNO 열에는 사원 번호 앞 두 자리 외 뒷자리를 * 기호로 출력
+        MASKING_ENAME 열에는 사원 이름 첫 글자만 보여주고 나머지 글자 수 만큼 * 기호로 출력 */
+-- 출력 열: EMPNO, MASKING_EMPNO, ENAME, MASKING_ENAME
+select EMPNO,
+        rpad(substr(EMPNO,1, 2), 4, '*') as MASKING_EMPNO,
+        ENAME,
+        rpad(substr(ENAME, 1, 1), length(ENAME), '*') as MASKING_ENAME
+from EMP
+where length(ENAME) >= 5 and length(ENAME) < 6;
+
+/* Q2. EMP 테이블에서 사원의 월 평균 근무일 수는 21.5일이다. 하루 근무 시간을 8시간으로 보았을 때 
+        사원의 하루 급여(DAY_PAY)와 시급(TIME_PAY)을 계산하여 결과를 출력.
+        단, 하루 급여는 소수 셋째 자리에서 버리고, 시급은 소수 둘째 자리에서 반올림하라. */
+-- 출력 열: EMPNO, ENAME, SAL, DAY_PAY, TIME_PAY 
+select EMPNO, ENAME, SAL,
+    trunc(sal/21.5, 2) as DAY_PAY,
+    round(sal/21.5/8, 1) as TIME_PAY 
+from EMP;
+
+/* Q3. EMP 테이블에서 사원은 입사일을 기준으로 3개월이 지난 후 첫 월요일에 정직원이 된다.
+    사원이 정직원이 되는 날짜(R_JOB)을 yyyy-mm-dd 형식으로 출력하라.
+    단, 추가 수당(COMM)이 없는 사원의 추가수당은 N/A로 출력, */
+-- 출력 열: EMPNO, ENAME, HIREDATE, R_JOB, COMM
+select EMPNO, ENAME, HIREDATE,
+    to_char(add_months(HIREDATE, 3), 'yyyy-mm-dd') as R_JOB,
+    -- NVL(COMM, 'N/A') as COMM -- 문자열, 숫자열이 같이 쓰여서 실행안됐음 
+    NVL(to_char(COMM), 'N/A') as COMM 
+from EMP;
+
+/* Q4. EMP 테이블의 모든 사원을 대상으로 직속 상관의 사원 번호(MGR)을 다음과 같은 조건을 기준으로
+    변환해서 CHG_MGR열에 출력하라.
+    조건 : 직속상관의 사원 번호가 없을 때 : 0000
+            직속상관의 사원 번호 앞 두 자리가 75일 때 : 5555
+            직속상관의 사원 번호 앞 두 자리가 76일 때 : 6666
+            직속상관의 사원 번호 앞 두 자리가 77일 때 : 7777
+            직속상관의 사원 번호 앞 두 자리가 78일 때 : 8888
+            그 외의 직속상관 사원의 번호일 때 : 본래 직속상관의 사원 번호를 그대로 출력 */
+-- 출력 열 : EMPNO, ENAME, MGR, CHG_MGR
+-- 내가 만든거
+select EMPNO, ENAME, MGR,
+    case 
+        when MGR is null then '0000'
+        when substr(to_CHAR(MGR),1,2) = '75' then '5555'
+        when substr(to_CHAR(MGR),1,2) = '76' then '6666'
+        when substr(to_CHAR(MGR),1,2) = '77' then '7777'
+        when substr(to_CHAR(MGR),1,2) = '78' then '8888'
+        else to_char(MGR)
+    end as CHG_MGR
+from EMP;    
+
+-- 재은 씨 답
+select EMPNO, ENAME, MGR,
+    case 
+        when MGR is null then '0000'
+        when MGR like '75%' then '5555'
+        when MGR like '76%' then '6666'
+        when MGR like '77%' then '7777'
+        when MGR like '78%' then '8888'
+        else to_char(MGR)
+    end as CHG_MGR
+from EMP;  
+
+-- 선생님 답 1
+select EMPNO, ENAME, MGR,
+    case 
+        when MGR is null then '0000'
+        when MGR is not null then
+                                case substr(MGR, 1, 2)
+                                    when '75' then '5555'
+                                    when '76' then '6666'
+                                    when '77' then '7777'
+                                    when '78' then '8888'
+                                    else to_char(MGR)
+                                end
+    end as CHG_MGR
+from EMP;    
+
+-- 선생님 답 2
+select EMPNO, ENAME, MGR,
+    case substr(MGR, 1, 2)
+        when '75' then '5555'
+        when '76' then '6666'
+        when '77' then '7777'
+        when '78' then '8888'
+        else to_char(nvl(MGR, '0000'))
+    end as CHG_MGR
+from EMP;    
+
+-- 선생님 답 3
+select EMPNO, ENAME, MGR,
+    case
+        when MGR is null then '0000'
+        when substr(MGR, 2, 1) in('5','6','7','8')
+            then rpad(substr(MGR, 2, 1), length(MGR), substr(MGR, 2, 1)) 
+        else '' || MGR
+    end as CHG_MGR
+from EMP;    
+
+
+/* 다중행 함수 */
+-- where에서 쓰기 곤란함.
+-- SUM 함수
+select SUM(SAL) from EMP;
+select ENAME, SUM(SAL) from EMP; -- 엑셀로 치면 여러 줄과 셀 병합 셀을 같이 출력하였기에 불가
+select sum(COMM) from EMP; -- null은 알아서 무시됨
+
+-- COUNT 함수
+select count(*) from EMP; -- 몇 줄(행)이 있는가
+select count(*), sum(SAL) from EMP; -- count와 sum 같이 쓸수 있음
+select count(SAL), count(COMM) from EMP; 
+-- null은 제외하고 카운팅. 어떤 행에 null이 있는지 모르기에 *를 많이 사용
+
+-- MAX, MIN 함수
+select max(SAL), min(SAL), min(HIREDATE), min(COMM) from EMP; -- 날짜도 가능. null은 알아서 제외
+
+-- 문제 : 이름에 A가 있는 사람은 몇명인가
+select count(ENAME) from EMP
+where ENAME like '%A%';
+
+-- AVG 함수 : 평균값
+select avg(SAL) from EMP;
+-- 문제 : 평균보다 높게 받는 사람 출력
+select * from EMP
+where SAL > avg(SAL); -- 다중행 함수(집계 함수)는  where에서 사용할 수 없다
+
+/* GROUP BY절 */
+-- distint(중복 제거) 대신 group by를 더 활용함
+select avg(SAL), DEPTNO from EMP
+group by DEPTNO;
+
+select JOB from EMP
+group by JOB;
+
+select DEPTNO, JOB, count(*)
+from EMP
+group by DEPTNO, JOB
+order by DEPTNO, JOB;
+
+select JOB from EMP 
+where DEPTNO = 10 -- group by와 where 함께 사용가능함
+group by JOB;
+
+-- HAVING 절
+select JOB, DEPTNO from EMP 
+group by DEPTNO, JOB
+    having deptno = 10;
+    
+select DEPTNO, JOB, avg(SAL) from EMP 
+group by DEPTNO, JOB
+    having avg(SAL) >= 2000;
+    
+    
+    
+/* 정리 (실행 순서) */
+/* 5 */select JOB, count(*) as CNT 
+/* 1 */ from EMP 
+/* 2 */ where SAL > 1000 
+/* 3 */ group by JOB
+   /* 4 */ having count(*) >= 3
+/* 6 */ order by CNT desc;
+
+ 
+/* 교재 200쪽 문제 */
+/* Q1. EMP 테이블에서 부서 번호, 평균 급여(AVG_SAL), 최고 급여(MAX_EMP), 최저 급여(MIN_SAL), 사원 수(CNT)를 출력
+단, 평균 급여를 출력할 때 소수는 제외하고 부서 번호별로 출력 */
+-- 출력 : DEPTNO, AVG_SAL, MAX_SAL, MIN_SAL, CNT
+select DEPTNO, 
+        trunc(avg(SAL), 0) as AVG_SAL,
+        max(SAL) as MAX_SAL,
+        min(SAL) as MIN_SAL,
+        count(*) as CNT
+from EMP
+group by DEPTNO
+order by DEPTNO asc;
+
+/* Q2. 같은 직책(JOB)에 종사하는 사원이 3명 이상인 직책과 인원수를 출력하라 */
+-- 출력 : JOB, COUNT(*)
+select JOB, count(*)
+from EMP
+group by JOB
+    having count(JOB) >= 3;
+
+/* Q3. 사원의 입사 연도(HIRE_YEAR)를 기준으로 부서별로 몇 명씩 입사했는지 출력하라 */
+-- 출력: HIRE_YEAR, DEPTNO, CNT
+select to_char(HIREDATE,'yyyy') as HIRE_DATE,
+        DEPTNO
+from EMP
+group by HIREDATE, DEPTNO
+order by HIREDATE asc;
+
+
+/* Q4. 추가 수당(COMM)을 받는 사원 수와 받지 않는 사원 수를 출력하라 */
+-- 출력: EXISXT_XOMM, CNT
