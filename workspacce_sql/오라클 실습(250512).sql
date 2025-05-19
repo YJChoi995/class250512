@@ -853,6 +853,11 @@ order by HIREDATE asc;
 
 /* Q4. 추가 수당(COMM)을 받는 사원 수와 받지 않는 사원 수를 출력하라 */
 -- 출력: EXISXT_XOMM, CNT
+select nvl2(COMM, 'X', 'O') as EXIST_COMM,
+        count(*)
+from EMP
+group by nvl2(COMM, 'X', 'O');
+
 
 
 /* 250519(월) 6일차 */
