@@ -851,6 +851,177 @@ from EMP
 group by HIREDATE, DEPTNO
 order by HIREDATE asc;
 
-
 /* Q4. 추가 수당(COMM)을 받는 사원 수와 받지 않는 사원 수를 출력하라 */
 -- 출력: EXISXT_XOMM, CNT
+
+
+/* 250519(월) 6일차 */
+/* JOIN */
+select * from DEPT;
+
+select * from EMP, DEPT
+order by EMPNO;
+
+select * from EMP, DEPT
+where EMP.DEPTNO = DEPT.DEPTNO
+order by EMPNO asc;
+
+-- 테이블 별칭 설정
+select * from EMP E, DEPT D
+where E.DEPTNO = D.DEPTNO
+order by EMPNO asc;
+
+select ENAME, DEPTNO -- DEPTNO가 E테이블과 D테이블에 모두 있는데 어디에서 가져올지
+from EMP E, DEPT D   -- 지정하지 않아 에러 뜸.
+where E.DEPTNO = D.DEPTNO; 
+
+select E. ENAME, E.DEPTNO
+from EMP E, DEPT D
+where E.DEPTNO = D.DEPTNO;
+
+/* 등가 조인 */
+-- where절에 조건식 추가하여 출력 범위 설정하기
+select E.EMPNO, E.ENAME, E.SAL, D.DEPTNO, D.DNAME, D.LOC
+from EMP E, DEPT D
+where E.DEPTNO = D.DEPTNO   
+    and SAL >= 3000;
+
+/* 비등가 조인 */    
+select * from SALGRADE;
+
+select * from EMP E, SALGRADE S
+where E.SAL between S.LOSAL and S.HISAL;
+-- EMP테이블의 SAL이 SALGRADE테이블의 LOSAL보다 크거나 같고 HISAL보다 작거나 같다
+
+/* 자제 조인 */
+select E1.EMPNO, E1.ENAME, E1.MGR,
+        E2.EMPNO as MGR_EMPNO,
+        E2.ENAME as MGR_ENAME
+from EMP E1, EMP E2
+where E1.MGR = E2.EMPNO;
+-- king은 MGR이 null이기 때문에 출력되지 않음
+
+/* 외부 조인 */
+-- 왼쪽 외부 조인(left outer join) : where Table1.Col1 = Table2.Co2(+)
+-- 오른쪽 외부 조인(right outer join) : where Table1.Col1(+) = Table2.Co2
+
+select E1.EMPNO, E1.ENAME, E1.MGR,
+        E2.EMPNO as MGR_EMPNO,
+        E2.ENAME as MGR_ENAME
+from EMP E1, EMP E2
+where E1.MGR = E2.EMPNO(+)
+order by E1.EMPNO;
+
+select E1.EMPNO, E1.ENAME, E1.MGR,
+        E2.EMPNO as MGR_EMPNO,
+        E2.ENAME as MGR_ENAME
+from EMP E1, EMP E2
+where E1.MGR(+) = E2.EMPNO
+order by E1.EMPNO;
+
+/* JOIN USING */
+select E.EMPNO, E.ENAME, E.JOB, E.HIREDATE, E.SAL, E.COMM,
+        DEPTNO, D.DNAME, D.LOC
+from EMP E join DEPT D using (DEPTNO)
+where SAL >= 3000
+order by DEPTNO, E.EMPNO;
+
+/* JOIN ON */
+select E.EMPNO, E.ENAME, E.JOB, E.HIREDATE, E.SAL, E.COMM,
+        E.DEPTNO, 
+        D.DNAME, D.LOC
+from EMP E join DEPT D on (E.DEPTNO = D.DEPTNO)
+where SAL <= 3000
+order by E.DEPTNO, EMPNO;
+
+/* OUTER JOIN */
+select *
+from EMP E1 left outer join EMP E2 on(E1.MGR = E2.EMPNO);
+-- E1.MGR = E2.EMPNO(+)와 같음 
+
+select *
+from EMP E1 right outer join EMP E2 on(E1.MGR = E2.EMPNO);
+
+select *
+from EMP E1 full outer join EMP E2 on(E1.MGR = E2.EMPNO);
+
+
+/* 교재 되새김 문제(p.226,227) */
+/* Q1. 급여(SAL)가 2000을 초과한 사원의 부서 정보, 사원 정보를 출력
+(단, SQL-99 이전 방식과 SQL-99 방식을 각각 사용하라)
+출력 : DEPTNO, DNAME, EMPNO, ENAME, SAL */
+-- SQL-99 이전 방식
+select D.DEPTNO, D.DNAME, E.EMPNO, E.ENAME, E.SAL
+from EMP E, DEPT D
+where (E.DEPTNO = D.DEPTNO) and SAL > 2000
+order by DEPTNO asc;
+
+-- SQL-99 방식
+select D.DEPTNO, D.DNAME, E.EMPNO, E.ENAME, E.SAL
+from EMP E join DEPT D on(E.DEPTNO = D.DEPTNO) 
+where SAL > 2000
+order by DEPTNO asc;
+
+/* Q2. 부서별 평균 급여, 최대 급여, 최소 급여, 사원 수를 출력
+(단, SQL-99 이전 방식과 SQL-99 방식을 각각 사용하라) 
+출력: DEPTNO, DNAME, AVG_SAL, MAX_SAL, MIN_SAL, CNT */
+-- SQL-99 이전 방식
+select D.DEPTNO, D.DNAME,
+        trunc(avg(E.SAL),0) as AVG_SAL,
+        max(E.SAL) as MAX_SAL,
+        min(E.SAL) as MIN_SAL,
+        count(*)
+from EMP E, DEPT D
+where E.DEPTNO = D.DEPTNO
+group by D.DEPTNO, D.DNAME;
+
+-- SQL-99 방식
+select D.DEPTNO, D.DNAME,
+        trunc(avg(E.SAL),0) as AVG_SAL,
+        max(E.SAL) as MAX_SAL,
+        min(E.SAL) as MIN_SAL,
+        count(*)
+from EMP E join DEPT D on(E.DEPTNO = D.DEPTNO)
+group by D.DEPTNO, D.DNAME;
+
+/* Q3. 모든 부서 정보와 사원 정보를 다음과 같이 부서 번호, 사원 이름순으로 정렬하여 출력
+(단, SQL-99 이전 방식과 SQL-99 방식을 각각 사용하라) 
+출력 : DEPTNO, DNAME, EMPNO, ENAME, JOB, SAL */
+-- SQL-99 이전 방식
+select D.DEPTNO, D.DNAME,
+        E.SAL, E.JOB, E.SAL
+from EMP E, DEPT D
+where E.DEPTNO(+) = D.DEPTNO
+order by D.DEPTNO, E.ENAME;
+
+-- SQL-99 방식
+select D.DEPTNO, D.DNAME,
+        E.SAL, E.JOB, E.SAL
+from EMP E right outer join DEPT D on(E.DEPTNO = D.DEPTNO)
+order by D.DEPTNO, E.ENAME;
+
+/* Q4. 모든 부서 정보, 사원 정보, 급여 등급 정보, 각 사원의 직속상관 정보를 부서 번호, 사원 번호 순서로 정렬하여 출력
+(단, SQL-99 이전 방식과 SQL-99 방식을 각각 사용하라) 
+출력 : DEPTNO, DNAME, EMPNO, ENAME, MGR, SAL, DEPTNO_1, LOSAL, HISAL, GRADE, MGR_EMPNO, MGR_ENAME */
+-- SQL-99 이전 방식
+select D.DEPTNO, D.DNAME,
+        E1.EMPNO, E1.ENAME, E1.MGR, E1.SAL, E1.DEPTNO, 
+        S.LOSAL, S.HISAL, S.GRADE, 
+        E2.EMPNO as MGR_EMPNO,
+        E2.ENAME as MGR_ENAME
+from EMP E1, EMP E2, DEPT D, SALGRADE S
+where E1.MGR = E2.EMPNO(+)
+        and E1.DEPTNO(+) = D.DEPTNO
+        and (E1.SAL >= S.LOSAL(+) and E1.SAL <= S.HISAL(+))
+order by D.DEPTNO, E1.EMPNO;
+
+-- SQL-99 방식
+select D.DEPTNO, D.DNAME,
+        E1.EMPNO, E1.ENAME, E1.MGR, E1.SAL, E1.DEPTNO, 
+        S.LOSAL, S.HISAL, S.GRADE, 
+        E2.EMPNO as MGR_EMPNO,
+        E2.ENAME as MGR_ENAME
+from DEPT D left outer join EMP E1 on(D.DEPTNO = E1.DEPTNO)
+            left outer join EMP E2 on(E1.MGR = E2.DEPTNO)
+            left outer join SALGRADE S on(E1.SAL between S.LOSAL and S.HISAL)
+order by D.DEPTNO, E1.EMPNO;
