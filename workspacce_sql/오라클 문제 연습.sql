@@ -221,7 +221,12 @@ order by DEPTNO asc;
 
 /* Q2. 같은 직책(JOB)에 종사하는 사원이 3명 이상인 직책과 인원수를 출력하라 */
 -- 출력 : JOB, COUNT(*)
-
+select E.JOB,
+        count(*)
+from EMP E, DEPT D
+where E.DEPTNO = D.DEPTNO
+group by E.JOB
+        having count(JOB) >= 3;
 
 /* Q3. 사원의 입사 연도(HIRE_YEAR)를 기준으로 부서별로 몇 명씩 입사했는지 출력하라 */
 -- 출력: HIRE_YEAR, DEPTNO, CNT
@@ -229,11 +234,14 @@ select to_char(HIREDATE, 'yyyy') as HIRE_YEAR,
         DEPTNO,
         count(*) as CNT        
 from EMP
-group by DEPTNO, to_char(HIREDATE, 'yyyy')
-order by DEPTNO asc;
+group by DEPTNO, to_char(HIREDATE, 'yyyy');
 
 /* Q4. 추가 수당(COMM)을 받는 사원 수와 받지 않는 사원 수를 출력하라 */
 -- 출력: EXIST_COMM, CNT
+select nvl2(COMM, 'O', 'X') as EXIST_COMM,
+        count(*)
+from EMP
+group by nvl2(COMM, 'O', 'X');
 
 
 
@@ -243,36 +251,38 @@ order by DEPTNO asc;
 (단, SQL-99 이전 방식과 SQL-99 방식을 각각 사용하라)
 출력 : DEPTNO, DNAME, EMPNO, ENAME, SAL */
 -- SQL-99 이전 방식
-select D.DEPTNO, D.DNAME, E.EMPNO, E.ENAME, E.SAL
+select D.DEPTNO, D.DNAME, 
+        E.EMPNO, E.ENAME, E.SAL
 from EMP E, DEPT D
 where E.DEPTNO = D.DEPTNO
-        and E.SAL >= 2000
+        and E.SAL > 2000
 order by D.DEPTNO asc;
 
 -- SQL-99 방식
-select D.DEPTNO, D.DNAME, E.EMPNO, E.ENAME, E.SAL
+select D.DEPTNO, D.DNAME, 
+        E.EMPNO, E.ENAME, E.SAL
 from EMP E join DEPT D on(E.DEPTNO = D.DEPTNO)
-where E.SAL >= 2000
+where E.SAL > 2000
 order by D.DEPTNO asc;
 
 /* Q2. 부서별 평균 급여, 최대 급여, 최소 급여, 사원 수를 출력
 (단, SQL-99 이전 방식과 SQL-99 방식을 각각 사용하라) 
 출력: DEPTNO, DNAME, AVG_SAL, MAX_SAL, MIN_SAL, CNT */
 -- SQL-99 이전 방식
-select D.DEPTNO, D.DNAME, 
-        trunc(avg(E.SAL), 0) as AVG_SAL,
-        max(E.SAL) as MAX_SAL,
-        min(E.SAL) aS MIN_SAL,
+select D.DEPTNO, D.DNAME,
+        trunc(avg(SAL), 0) as AVG_SAL,
+        max(SAL) as MAX_SAL,
+        min(SAL) as MIN_SAL,
         count(*) as CNT
 from EMP E, DEPT D
 where E.DEPTNO = D.DEPTNO
 group by D.DEPTNO, D.DNAME;
 
 -- SQL-99 방식
-select D.DEPTNO, D.DNAME, 
-        trunc(avg(E.SAL), 0) as AVG_SAL,
-        max(E.SAL) as MAX_SAL,
-        min(E.SAL) aS MIN_SAL,
+select D.DEPTNO, D.DNAME,
+        trunc(avg(SAL), 0) as AVG_SAL,
+        max(SAL) as MAX_SAL,
+        min(SAL) as MIN_SAL,
         count(*) as CNT
 from EMP E join DEPT D on(E.DEPTNO = D.DEPTNO)
 group by D.DEPTNO, D.DNAME;
@@ -281,16 +291,52 @@ group by D.DEPTNO, D.DNAME;
 (단, SQL-99 이전 방식과 SQL-99 방식을 각각 사용하라) 
 출력 : DEPTNO, DNAME, EMPNO, ENAME, JOB, SAL */
 -- SQL-99 이전 방식
+select D.DEPTNO, D.DNAME, 
+        E.EMPNO, E.ENAME, E.JOB, E.SAL
+from EMP E, DEPT D
+where E.DEPTNO(+) = D.DEPTNO
+order by D.DEPTNO asc, E.ENAME asc;
 
 -- SQL-99 방식
-
+select D.DEPTNO, D.DNAME, 
+        E.EMPNO, E.ENAME, E.JOB, E.SAL
+from EMP E right join DEPT D on(E.DEPTNO = D.DEPTNO)
+order by D.DEPTNO asc,  E.ENAME asc;
 
 /* Q4. 모든 부서 정보, 사원 정보, 급여 등급 정보, 각 사원의 직속상관 정보를 부서 번호, 사원 번호 순서로 정렬하여 출력
 (단, SQL-99 이전 방식과 SQL-99 방식을 각각 사용하라) 
-출력 : DEPTNO, DNAME, EMPNO, MGR, SAL, DEPTNO_1, LOSAL, HISAL, GRADE, MGR_EMPNO, MGR_ENAME */
+출력 : DEPTNO, DNAME, EMPNO, ENAME, MGR, SAL, DEPTNO_1, LOSAL, HISAL, GRADE, MGR_EMPNO, MGR_ENAME */
 -- SQL-99 이전 방식
+select D.DEPTNO, D.DNAME,
+        E1.EMPNO, E1.ENAME, E1.MGR, E1.SAL, E1.DEPTNO,
+        S.LOSAL, S.HISAL, S.GRADE,
+        E2.EMPNO as MGR_EMPNO,
+        E2.ENAME as MGR_ENAME
+from EMP E1, EMP E2, DEPT D, SALGRADE S
+where E1.MGR = E2.EMPNO(+)
+    and E1.DEPTNO(+) = D.DEPTNO
+    and E1.SAL between S.LOSAL(+) and S.HISAL(+)
+order by D.DEPTNO, D.DNAME;
 
 -- SQL-99 방식
 
 
 
+/* 250520(화) */
+/* 교재 되새김 문제(p.249) */
+/* Q1. 전체 사원 중 ALLEN과 같은 직책(JOB)인 사원의 사원 정보, 부서 정보를 출력
+출력 : JOB, EMPNO, ENAME, SAL, DEPTNO, DNAME */
+
+/* Q2. 전체 사원의 평균 급여(SAL)보다 많이 받는 사원의 사원 정보, 부서 정보, 급여 등급 정보를 출력
+(단, 출력할 때 급여가 많은 순으로 정렬하되 같다면 사원 번호를 기준으로 오름차순으로 정렬) 
+출력 : EMPNO, ENAME, DNAME, HIREDATE, LOC, SAL, GRADE */
+
+/* Q3. 10번 부서에서 근무하는 사원 중 30번 부서에 없는 직책인 사원의 사원 정보, 부서 정보를 출력
+출력 : EMPNO, ENAME, JOB, DEPTNO, DNAME, LOC */
+
+/* Q4. 직책이 SALESMAN인 사람의 최고 급여보다 많이 받는 사원의 사원 정보, 급여 등급 정보를 출력
+(사원 번호 기준 오름차순으로 정렬)
+출력 : EMPNO, ENAME, SAL, GRADE */
+-- 다중행 함수를 사용하는 방법
+
+-- 다중행 함수를 사용하지 않는 방법

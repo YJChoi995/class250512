@@ -932,23 +932,23 @@ where SAL >= 3000
 order by DEPTNO, E.EMPNO;
 
 /* JOIN ON */
-select E.EMPNO, E.ENAME, E.JOB, E.HIREDATE, E.SAL, E.COMM,
-        E.DEPTNO, 
-        D.DNAME, D.LOC
-from EMP E join DEPT D on (E.DEPTNO = D.DEPTNO)
-where SAL <= 3000
+  select E.EMPNO, E.ENAME, E.JOB, E.HIREDATE, E.SAL, E.COMM,
+         E.DEPTNO, 
+         D.DNAME, D.LOC
+    from EMP E join DEPT D on (E.DEPTNO = D.DEPTNO)
+   where SAL <= 3000
 order by E.DEPTNO, EMPNO;
 
 /* OUTER JOIN */
 select *
-from EMP E1 left outer join EMP E2 on(E1.MGR = E2.EMPNO);
+  from EMP E1 left outer join EMP E2 on(E1.MGR = E2.EMPNO);
 -- E1.MGR = E2.EMPNO(+)와 같음 
 
 select *
-from EMP E1 right outer join EMP E2 on(E1.MGR = E2.EMPNO);
+  from EMP E1 right outer join EMP E2 on(E1.MGR = E2.EMPNO);
 
 select *
-from EMP E1 full outer join EMP E2 on(E1.MGR = E2.EMPNO);
+  from EMP E1 full outer join EMP E2 on(E1.MGR = E2.EMPNO);
 
 
 /* 교재 되새김 문제(p.226,227) */
@@ -959,74 +959,239 @@ from EMP E1 full outer join EMP E2 on(E1.MGR = E2.EMPNO);
 select D.DEPTNO, D.DNAME, E.EMPNO, E.ENAME, E.SAL
 from EMP E, DEPT D
 where (E.DEPTNO = D.DEPTNO) and SAL > 2000
-order by DEPTNO asc;
+order by D.DEPTNO asc, D.DNAME asc;
 
 -- SQL-99 방식
-select D.DEPTNO, D.DNAME, E.EMPNO, E.ENAME, E.SAL
-from EMP E join DEPT D on(E.DEPTNO = D.DEPTNO) 
-where SAL > 2000
-order by DEPTNO asc;
+  select D.DEPTNO, D.DNAME, E.EMPNO, E.ENAME, E.SAL
+    from EMP E join DEPT D on(E.DEPTNO = D.DEPTNO) 
+   where SAL > 2000
+order by D.DEPTNO asc, D.DNAME asc;
 
 /* Q2. 부서별 평균 급여, 최대 급여, 최소 급여, 사원 수를 출력
 (단, SQL-99 이전 방식과 SQL-99 방식을 각각 사용하라) 
 출력: DEPTNO, DNAME, AVG_SAL, MAX_SAL, MIN_SAL, CNT */
 -- SQL-99 이전 방식
-select D.DEPTNO, D.DNAME,
-        trunc(avg(E.SAL),0) as AVG_SAL,
-        max(E.SAL) as MAX_SAL,
-        min(E.SAL) as MIN_SAL,
-        count(*)
-from EMP E, DEPT D
-where E.DEPTNO = D.DEPTNO
+  select D.DEPTNO, D.DNAME,
+         trunc(avg(E.SAL),0) as AVG_SAL,
+         max(E.SAL) as MAX_SAL,
+         min(E.SAL) as MIN_SAL,
+         count(*)
+    from EMP E, DEPT D
+   where E.DEPTNO = D.DEPTNO
 group by D.DEPTNO, D.DNAME;
 
 -- SQL-99 방식
-select D.DEPTNO, D.DNAME,
-        trunc(avg(E.SAL),0) as AVG_SAL,
-        max(E.SAL) as MAX_SAL,
-        min(E.SAL) as MIN_SAL,
-        count(*)
-from EMP E join DEPT D on(E.DEPTNO = D.DEPTNO)
+  select D.DEPTNO, D.DNAME,
+         floor(avg(E.SAL)) as AVG_SAL,
+         max(E.SAL) as MAX_SAL,
+         min(E.SAL) as MIN_SAL,
+         count(*)
+    from EMP E join DEPT D on(E.DEPTNO = D.DEPTNO)
 group by D.DEPTNO, D.DNAME;
 
 /* Q3. 모든 부서 정보와 사원 정보를 다음과 같이 부서 번호, 사원 이름순으로 정렬하여 출력
 (단, SQL-99 이전 방식과 SQL-99 방식을 각각 사용하라) 
 출력 : DEPTNO, DNAME, EMPNO, ENAME, JOB, SAL */
 -- SQL-99 이전 방식
-select D.DEPTNO, D.DNAME,
-        E.SAL, E.JOB, E.SAL
-from EMP E, DEPT D
-where E.DEPTNO(+) = D.DEPTNO
+  select D.DEPTNO, D.DNAME,
+         E.SAL, E.JOB, E.SAL
+    from EMP E, DEPT D
+   where D.DEPTNO = E.DEPTNO(+)
 order by D.DEPTNO, E.ENAME;
 
 -- SQL-99 방식
-select D.DEPTNO, D.DNAME,
-        E.SAL, E.JOB, E.SAL
-from EMP E right outer join DEPT D on(E.DEPTNO = D.DEPTNO)
+  select D.DEPTNO, D.DNAME,
+         E.SAL, E.JOB, E.SAL
+    from DEPT D left outer join EMP E on(D.DEPTNO = E.DEPTNO)
 order by D.DEPTNO, E.ENAME;
 
 /* Q4. 모든 부서 정보, 사원 정보, 급여 등급 정보, 각 사원의 직속상관 정보를 부서 번호, 사원 번호 순서로 정렬하여 출력
 (단, SQL-99 이전 방식과 SQL-99 방식을 각각 사용하라) 
 출력 : DEPTNO, DNAME, EMPNO, ENAME, MGR, SAL, DEPTNO_1, LOSAL, HISAL, GRADE, MGR_EMPNO, MGR_ENAME */
 -- SQL-99 이전 방식
-select D.DEPTNO, D.DNAME,
-        E1.EMPNO, E1.ENAME, E1.MGR, E1.SAL, E1.DEPTNO, 
-        S.LOSAL, S.HISAL, S.GRADE, 
-        E2.EMPNO as MGR_EMPNO,
-        E2.ENAME as MGR_ENAME
-from EMP E1, EMP E2, DEPT D, SALGRADE S
-where E1.MGR = E2.EMPNO(+)
-        and E1.DEPTNO(+) = D.DEPTNO
-        and (E1.SAL >= S.LOSAL(+) and E1.SAL <= S.HISAL(+))
+  select D.DEPTNO, D.DNAME,
+         E1.EMPNO, E1.ENAME, E1.MGR, E1.SAL, E1.DEPTNO, 
+         S.LOSAL, S.HISAL, S.GRADE, 
+         E2.EMPNO as MGR_EMPNO,
+         E2.ENAME as MGR_ENAME
+    from EMP E1, EMP E2, DEPT D, SALGRADE S
+   where E1.MGR = E2.EMPNO(+)
+         and E1.DEPTNO(+) = D.DEPTNO
+         and E1.SAL between S.LOSAL(+) and S.HISAL(+)
 order by D.DEPTNO, E1.EMPNO;
 
 -- SQL-99 방식
-select D.DEPTNO, D.DNAME,
-        E1.EMPNO, E1.ENAME, E1.MGR, E1.SAL, E1.DEPTNO, 
-        S.LOSAL, S.HISAL, S.GRADE, 
-        E2.EMPNO as MGR_EMPNO,
-        E2.ENAME as MGR_ENAME
-from DEPT D left outer join EMP E1 on(D.DEPTNO = E1.DEPTNO)
-            left outer join EMP E2 on(E1.MGR = E2.DEPTNO)
-            left outer join SALGRADE S on(E1.SAL between S.LOSAL and S.HISAL)
+  select D.DEPTNO, D.DNAME,
+         E1.EMPNO, E1.ENAME, E1.MGR, E1.SAL, E1.DEPTNO as DEPTNO_1, 
+         S.LOSAL, S.HISAL, S.GRADE, 
+         E2.EMPNO as MGR_EMPNO,
+         E2.ENAME as MGR_ENAME
+    from DEPT D left outer join EMP E1 on(D.DEPTNO = E1.DEPTNO)
+                left outer join EMP E2 on(E1.MGR = E2.DEPTNO)
+                left outer join SALGRADE S on(E1.SAL between S.LOSAL and S.HISAL)
 order by D.DEPTNO, E1.EMPNO;
+
+
+
+/* 250520(화) 7일차 */
+/* 복습 퀴즈 */
+-- 각 부서별로 급여가 가장 높은 사원, 가장 낮은 사원의 급여 차이를 출력
+  select DEPTNO,
+         max(SAL),
+         min(SAL),
+         max(SAL) - min(SAL) as 급여차 
+    from EMP
+group by DEPTNO
+order by DEPTNO asc;
+
+/* 심화 퀴즈 (며칠 전 문제) */
+-- JOB을 총 20자 중 가운데 정렬
+-- (전체 길이의 반 - 글씨 길이의 반)
+-- 일단 왼쪽 채우고, 다음에 오른쪽 채우고
+select JOB,
+       rpad(lpad(JOB, 20/2 + length(JOB)/2), 20) as 가운데_정렬
+  from EMP;
+-- 선생님 답 
+select JOB,
+       lpad(JOB, 20/2 + length(JOB)/2, ' ') as 가운데_정렬,
+       rpad(lpad(JOB, 20/2 + length(JOB)/2, ' '), 20, ' ' ) as 가운데_정렬,
+       rpad(lpad(JOB, (20+length(JOB))/2, ' '), 20, ' ' ) as 가운데_정렬
+  from EMP;
+
+/* 서브쿼리(subquery)*/
+select * from EMP
+ where SAL > (select SAL from EMP where ENAME = 'JONES');
+
+-- 단일행 서브쿼리 
+select * from EMP
+ where HIREDATE < (select HIREDATE from EMP
+                    where ENAME = 'SCOTT');
+-- 전체 사원의 평균 급여보다 적거나 같은 급여를 받는 20번 부서의 사원을 출력
+select * from EMP
+ where DEPTNO = 20
+       and SAL >= (select avg(sal) from EMP);
+    
+    
+/* 다중행 서브쿼리 */ 
+-- in 연산자
+select * from EMP
+ where DEPTNO in(20,30);
+
+-- 부서별 최고 급여과 같은 급여를 받는 사원 정보 출력
+select * from EMP
+ where SAL in (select max(SAL) from EMP group by DEPTNO);
+
+-- ANY, SOME 연산자
+select * from EMP
+ where SAL = any(select max(SAL) from EMP group by DEPTNO);
+
+select * from EMP
+ where SAL = some(select max(SAL) from EMP group by DEPTNO);
+
+-- ALL 연산자
+-- EXISTS 연산자
+
+/* 비교할 열이 여러 개인 다중열 서브쿼리 */
+select * from EMP 
+ where (DEPTNO, SAL) in (select DEPTNO, max(SAL) from EMP group by DEPTNO);
+ 
+/* FROM절에 사용하는 서브쿼리와 WITH절 */
+-- 인라인 뷰 : from절에 사용하는 서브쿼리. 
+-- select문으로 일부 데이터를 먼저 추출한 다음, 별칭을 지정하여 사용
+select E10.EMPNO, E10.ENAME, E10.DEPTNO, D.DNAME, D.LOC
+  from (select * from EMP where DEPTNO = 10) E10,
+       DEPT D
+ where E10.DEPTNO = D.DEPTNO;
+ 
+-- JOB별로 3명 이상 있는 부서를 고르시오
+select * 
+from (select JOB, count(*) CNT
+      from EMP
+      group by JOB
+) 
+where CNT >= 3;
+
+
+ /* 책에 안 나오는 내용 */
+select ROWNUM, EMP.*
+  from EMP;
+ 
+select * 
+from (
+      select ROWNUM RN, EMP.*
+      from EMP
+)
+where RN > 3 and RN < 6;
+
+select *
+from(
+     select ROWNUM RN, E.*
+     from (select EMP.* from EMP
+           order by SAL desc) E
+)
+where RN >=2 and RN <= 4;
+
+
+-- WITH절 사용하기
+with 
+E10 as (select * from EMP where DEPTNO =10),
+D   as (select * from DEPT)
+select E10.EMPNO, E10.ENAME, E10.DEPTNO, D.DNAME, D.LOC
+  from E10, D
+ where E10.DEPTNO = D.DEPTNO;
+ 
+/* SELECT절에 사용하는 서브쿼리 */
+select EMPNO, ENAME, JOB, SAL, 
+       (select GRADE
+          from SALGRADE
+         where E.SAL between LOSAL and HISAL) as SALGRADE,
+       DEPTNO, 
+       (select DNAME
+          from DEPT
+         where E.DEPTNO = DEPT.DEPTNO) as DNAME
+from EMP E;
+
+
+/* 교재 되새김 문제(p.249) */
+/* Q1. 전체 사원 중 ALLEN과 같은 직책(JOB)인 사원의 사원 정보, 부서 정보를 출력
+출력 : JOB, EMPNO, ENAME, SAL, DEPTNO, DNAME */
+select E.JOB, E.EMPNO, E.ENAME, E.SAL, D.DEPTNO, D.DNAME
+  from EMP E, DEPT D
+ where E.DEPTNO = D.DEPTNO
+       and E.JOB = (select JOB from EMP where ENAME = 'ALLEN')
+order by E.ENAME asc;  
+
+/* Q2. 전체 사원의 평균 급여(SAL)보다 많이 받는 사원의 사원 정보, 부서 정보, 급여 등급 정보를 출력
+(단, 출력할 때 급여가 많은 순으로 정렬하되 같다면 사원 번호를 기준으로 오름차순으로 정렬) 
+출력 : EMPNO, ENAME, DNAME, HIREDATE, LOC, SAL, GRADE */
+  select E.EMPNO, E.ENAME,
+         (select D.DNAME from DEPT D where D.DEPTNO = E.DEPTNO) as DNAME,
+         E.HIREDATE,
+         (select D.LOC from DEPT D where D.DEPTNO = E.DEPTNO) as LOC,
+         E.SAL,
+         (select S.GRADE from SALGRADE S 
+          where E.SAL between S.LOSAL and S.HISAL) as GRADE
+    from EMP E
+   where E.SAL > (select avg(SAL) from EMP)
+order by E.SAL desc, E.EMPNO asc;
+
+/* Q3. 10번 부서에서 근무하는 사원 중 30번 부서에 없는 직책인 사원의 사원 정보, 부서 정보를 출력
+출력 : EMPNO, ENAME, JOB, DEPTNO, DNAME, LOC */
+select E.EMPNO, E.ENAME, E.JOB, D.DEPTNO, D.DNAME, D.LOC
+  from EMP E, DEPT D
+ where E.DEPTNO = D.DEPTNO
+       and E.DEPTNO = 10
+       and E.JOB not in(select JOB from EMP where DEPTNO = 30);
+
+/* Q4. 직책이 SALESMAN인 사람의 최고 급여보다 많이 받는 사원의 사원 정보, 급여 등급 정보를 출력
+(사원 번호 기준 오름차순으로 정렬)
+출력 : EMPNO, ENAME, SAL, GRADE */
+-- 다중행 함수를 사용하는 방법
+  select E.EMPNO, E.ENAME, E.SAL, S.GRADE
+    from EMP E, SALGRADE S
+   where (E.SAL between S.LOSAL and S.HISAL) 
+         and E.SAL > (select max(SAL) from(select SAL from EMP where JOB = 'SALESMAN'))
+order by E.EMPNO asc;
+
+-- 다중행 함수를 사용하지 않는 방법
+
