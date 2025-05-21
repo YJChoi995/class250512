@@ -1155,15 +1155,19 @@ from EMP E;
 /* 교재 되새김 문제(p.249) */
 /* Q1. 전체 사원 중 ALLEN과 같은 직책(JOB)인 사원의 사원 정보, 부서 정보를 출력
 출력 : JOB, EMPNO, ENAME, SAL, DEPTNO, DNAME */
-select E.JOB, E.EMPNO, E.ENAME, E.SAL, D.DEPTNO, D.DNAME
-  from EMP E, DEPT D
- where E.DEPTNO = D.DEPTNO
-       and E.JOB = (select JOB from EMP where ENAME = 'ALLEN')
-order by E.ENAME asc;  
+  select E.JOB, E.EMPNO, E.ENAME, E.SAL, D.DEPTNO, D.DNAME
+    from EMP E, DEPT D
+   where E.DEPTNO = D.DEPTNO
+         and E.JOB = (select JOB from EMP where ENAME = 'ALLEN')
+order by E.SAL desc, E.ENAME asc;
 
 /* Q2. 전체 사원의 평균 급여(SAL)보다 많이 받는 사원의 사원 정보, 부서 정보, 급여 등급 정보를 출력
 (단, 출력할 때 급여가 많은 순으로 정렬하되 같다면 사원 번호를 기준으로 오름차순으로 정렬) 
 출력 : EMPNO, ENAME, DNAME, HIREDATE, LOC, SAL, GRADE */
+-- 풀이
+-- 1. 전체 사원 평균 급여 확보
+-- 2. 평균 급여 보다 초과하는 사람들 출력
+-- 3. 정렬은 급여 내림차순, 사원 번호 오름차순
   select E.EMPNO, E.ENAME,
          (select D.DNAME from DEPT D where D.DEPTNO = E.DEPTNO) as DNAME,
          E.HIREDATE,
@@ -1187,11 +1191,204 @@ select E.EMPNO, E.ENAME, E.JOB, D.DEPTNO, D.DNAME, D.LOC
 (사원 번호 기준 오름차순으로 정렬)
 출력 : EMPNO, ENAME, SAL, GRADE */
 -- 다중행 함수를 사용하는 방법
-  select E.EMPNO, E.ENAME, E.SAL, S.GRADE
-    from EMP E, SALGRADE S
-   where (E.SAL between S.LOSAL and S.HISAL) 
-         and E.SAL > (select max(SAL) from(select SAL from EMP where JOB = 'SALESMAN'))
+select E.EMPNO, E.ENAME, E.SAL, S.GRADE
+  from EMP E, SALGRADE S
+ where (E.SAL between S.LOSAL and S.HISAL)
+       and E.SAL > ( select max(SAL) 
+                    from (select SAL from EMP where JOB = 'SALESMAN') )
 order by E.EMPNO asc;
 
 -- 다중행 함수를 사용하지 않는 방법
+select E.EMPNO, E.ENAME, E.SAL, S.GRADE
+  from EMP E, SALGRADE S
+ where (E.SAL between S.LOSAL and S.HISAL)
+       and E.SAL > all ( select (SAL) 
+                    from (select SAL from EMP where JOB = 'SALESMAN') )
+order by E.EMPNO asc;
 
+
+
+/* 250521(수) 8일차 */
+/* 복습 문제 */
+-- Q1. COMM이 null인 사원을 급여 오름차순으로 정렬
+  select * from EMP
+   where COMM is null
+order by SAL asc;
+
+/* Q2. 급여 등급 별 사원 수를 등급 오름차순으로 정렬
+단, 모든 등급을 표시한다 */
+  select S.GRADE, count(*)
+    from EMP E, SALGRADE S
+   where E.SAL between S.LOSAL and S.HISAL
+group by S.GRADE
+order by S.GRADE asc;
+
+/* Q3. 이름, 급여, 급여 등급, 부서 이름 조회
+단, 급여 등급 3 이상만 조회. 급여 등급 내림차순, 급여 등급이 같은 경우 급여 내림차순 */
+  select E.ENAME, E.SAL, S.GRADE, D.DNAME 
+    from DEPT D left outer join EMP E on (D.DEPTNO = E.DEPTNO)
+                left outer join SALGRADE S on (E.SAL between S.LOSAL and S.HISAL)
+   where S.GRADE >= 3
+order by S.GRADE desc, E.SAL desc;
+
+/* Q4. 부서명이 SALES인 사원 중 급여 등급이 2 또는 3인 사원을 급여 내림차순으로 정렬 */
+  select E.*, D.*, S.*
+    from DEPT D left outer join EMP E on (D.DEPTNO = E.DEPTNO)
+                left outer join SALGRADE S on (E.SAL between S.LOSAL and S.HISAL)
+   where D.DNAME = 'SALES'
+         and S.GRADE in(2,3)
+order by E.SAL desc;
+
+--------------------------------------------------------------------------------
+/* DDL */
+/* create */
+create table EMP_DDL(
+    EMPNO number(4),
+    ENAME varchar2(10),
+    JOB varchar2(9),
+    MGR number(4),
+    HIREDATE date,
+    SAL number(7,2),
+    COMM number(7,2),
+    DEPTNO number(2)
+);
+
+desc EMP_DDL;
+select * from EMP_DDL;
+
+-- 기존 테이블 열 구조와 데이터를 그대로 복사해 올 때
+create table DEPT_DDL
+    as select * from DEPT;
+    
+desc DEPT_DDL;
+select * from DEPT_DDL;
+
+-- 기존 테이블 열 구조와 일부 데이터만 복사해 올 때
+create table EMP_DDL_30
+    as select * from emp where DEPTNO = 30;
+    
+desc EMP_DDL_30;
+select * from EMP_DDL_30;
+    
+-- 기존 테이블 열 구조만 복사해 올 때   
+create table EMPDEPT_DDL
+    as select E.EMPNO, E.ENAME, E.JOB, E.MGR, E.HIREDATE,
+              E.SAL, E.COMM, D.DEPTNO, D.DNAME, D.LOC
+    from EMP E, DEPT D
+        where 1 <> 1; -- 언제나 거짓이다 : 한 줄도 조회 안되고 컬럼명만 가져옴
+
+desc EMPDEPT_DDL;
+select * from EMPDEPT_DDL;
+
+
+/* ALTER */
+create table EMP_ALTER
+    as select * from EMP;
+
+-- ADD : 테이블에 열을 추가    
+alter table EMP_ALTER
+    add HP varchar2(20); -- varchar로 적어도 자동으로 varchar2로 인식
+
+alter table EMP_ALTER
+    add AGE varchar2(3) default 1; -- 초기값을 지정할 수 있다
+    
+-- RENAME : 열 이름 변경
+alter table EMP_ALTER
+    rename column HP to TEL;
+    
+-- MODIFY : 열의 자료형을 변경
+-- 수정할 때 타입의 크기가 커지는 건 가능하지만 줄어드는건 불가능
+alter table EMP_ALTER
+    modify EMPNO number(5);
+
+-- DROP : 특정 열을 삭제    
+alter table EMP_ALTER
+    drop column TEL;    
+    
+-- table의 이름 변경
+rename EMP_ALTER to EMP_RNAME;
+
+-- TRUNCATE : 데이블의 데이터를 삭제
+truncate table EMP_RNAME;
+
+select * from EMP_RNAME;
+
+drop table EMP_RNAME;
+
+
+/* 10장 */
+-- INSERT : 테이블에 데이터 추가
+create table DEPT_TEMP
+    as select * from DEPT;
+    
+insert into DEPT_TEMP (DEPTNO, DNAME, LOC)
+            values (50, 'DATABASE', 'SEOUL');
+
+insert into DEPT_TEMP (DEPTNO, DNAME, LOC)
+            values (50, 'DATABASE', 'SEOUL');
+
+insert into DEPT_TEMP
+            values (60, 'NEWYORK', 'BUSAN');
+            
+-- 테이블에 null 데이터 입력하기
+insert into DEPT_TEMP (DEPTNO, DNAME, LOC)
+            values (70, 'WEB', null);
+insert into DEPT_TEMP (DEPTNO, DNAME, LOC)
+            values (80, 'MOBILE', ''); -- 오라클 전용 ''을 null 취급
+            
+insert into DEPT_TEMP (DEPTNO, LOC)
+            values (90, 'INCHEON'); -- 데이터를 제외하면 자동으로 null이 입력
+            
+-- 테이블에 날짜 데이터 입력하기
+create table EMP_TEMP
+    as select * from EMP where 1 <> 1;
+
+insert into EMP_TEMP(EMPNO, ENAME, HIREDATE)
+            values (2111, '이순신', to_date('25/05/21', 'yy/mm/dd'));
+            
+insert into EMP_TEMP(EMPNO, ENAME, HIREDATE)
+            values (3111, '심청이', sysdate);
+
+-- 서브쿼리를 사용하여 한 번에 여러 데이터 추가하기
+insert into EMP_TEMP
+select * from EMP where DEPTNO = 10;
+            
+select * from EMP_TEMP;     
+select * from DEPT_TEMP;       
+
+/* UPDATE : 테이블에서 데이터를 수정 */
+create table DEPT_TEMP2
+    as select * from DEPT;
+
+update DEPT_TEMP2
+   set LOC = 'SEOUL'; -- loc의 열이 모두 변경됨
+   
+-- 데이터 일부만 수정
+update DEPT_TEMP2
+   set DNAME = 'DATEBASE',
+       LOC = 'SEOUL2'
+where DEPTNO = 40;
+-- update, delete의 where를 무조건 select에서 검증하고 사용하기     
+
+select * from DEPT_TEMP2;
+
+
+create table EMP_TMP
+    as select * from EMP;
+    
+select SAL, SAL*1.03 from EMP_TMP
+ where SAL < 1000; 
+
+update EMP_TMP
+   set SAL = SAL * 1.03
+where SAL < 1000;
+
+select * from EMP_TMP;    
+
+commit;
+
+/* DELETE문 */
+create table EMP_TEMP2
+    as select * from EMP;
+select * from EMP_TEMP2;
+    
