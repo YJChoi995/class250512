@@ -1202,8 +1202,7 @@ order by E.EMPNO asc;
 select E.EMPNO, E.ENAME, E.SAL, S.GRADE
   from EMP E, SALGRADE S
  where (E.SAL between S.LOSAL and S.HISAL)
-       and E.SAL > all ( select (SAL) 
-                    from (select SAL from EMP where JOB = 'SALESMAN') )
+       and E.SAL > all ( select SAL from EMP where JOB = 'SALESMAN' )
 order by E.EMPNO asc;
 
 
@@ -1391,4 +1390,107 @@ commit;
 create table EMP_TEMP2
     as select * from EMP;
 select * from EMP_TEMP2;
-    
+
+/* 데이터 사전 */
+select * from dict;
+select * from dictionary;
+
+select table_name from USER_TABLES;
+
+/* 인덱스 */
+select * from USER_INDEXES;
+select * from USER_IND_COLUMNS;
+
+create index IDX_EMP_SAL on EMP(SAL); -- EMP테이블의 SAL 컬럼을 기준으로
+
+/* 오라클의 실행 계획 */
+select * from EMP where SAL > 2000;
+
+select /*+ index(E IDX_EMP_SAL) */ -- 강제 hint
+* from EMP E 
+where SAL >= 2000;
+
+/* VIEW */
+create view VW_EMP20
+       as (select EMPNO, ENAME, JOB, DEPTNO
+           from EMP
+           where DEPTNO = 20);
+           
+/* 시퀀스 */
+create sequence SEQ_DEPT
+increment by 10 -- 시퀀스에서 생성할 번호의 증갓값(선택)
+start with 10 -- 시퀀스에서 생성할 번호의 시작값(선택)
+maxvalue 90 -- 생성할 번호의 최댓값 지정(선택)
+minvalue 0 -- 생성할 번호의 최솟값 지정(선택)
+nocycle -- cycle이면 최댓값에 도달했을 때 시작값에서 다시 시작, no cycle이면 번호 생성을 중단(선택)
+cache 2; -- 생성할 번호를 메모리에 미리 할당해 놓을 개수를 지정
+
+create sequence SEQ_DEPT1
+start with 10;
+
+select SEQ_DEPT1.nextval
+from dual;
+
+select SEQ_DEPT1.currval
+from dual;
+
+insert into dept_temp (DEPTNO, DNAME, LOC)
+values (SEQ_DEPT1.nextval, '테스트', '천안');
+select * from DEPT_TEMP;
+
+
+/* PRIMARY KEY */
+create table TABLE_PK(
+       LOGIN_ID varchar2(20) primary key,
+       LOGIN_PWD varchar2(20) not null,
+       tel varchar2(20) );
+
+-- 이미 존재하는 거에 추가       
+insert into TABLE_PK 
+values ('ID', 'PW', null);
+-- null로 추가
+insert into TABLE_PK 
+values ('null', 'PW', null);
+-- null로 변경 : 업데이트 안되는 것이 정상
+update TABLE_PK
+set LOGIN_ID = null
+where LOGIN_ID = 'ID';
+-- 이미 존재하는 것으로 변경
+update TABLE_PK
+set LOGIN_ID = 'ID2'
+where LOGIN_ID = 'ID';
+
+select * from user_indexes;
+select * from TABLE_PK;
+desc TABLE_PK;
+
+/* FORIEGNKEY */
+create table DEPT_FK(
+    DEPTNO NUMBER(2) constraint DEPT_FK_PK primary key,
+    DNAME varchar2(14),
+    LOC varchar2(13)
+    );
+
+create table EMP_FK(
+    EMPNO number(4) constraint EMPFK_EMPNO_PK primary key,
+    ENAME varchar2(10),
+    JOB varchar2(9),
+    MGR number(4),
+    HIREDATE date,
+    SAL number(7,2),
+    COMM number(7,2),
+    DEPTNO number(2) constraint EMPFK_DEPTNO_FK references DEPT_FK (DEPTNO)
+);
+
+-- 아직 DEPT_FK에 데이터가 없어서 실패
+insert into EMP_FK
+values ( 0000, '이름', '직책', 1111, sysdate, 800, 0, 10);
+
+insert into DEPT_FK -- 참조할 테이블에 데이터 넣고 다시 실행
+values ( 10, '부서', '위치');
+insert into EMP_FK
+values ( 0000, '이름', '직책', 1111, sysdate, 800, 0, 10);
+
+select * from EMP_FK;
+select * from DEPT_FK;  
+desc EMP_FK; 
