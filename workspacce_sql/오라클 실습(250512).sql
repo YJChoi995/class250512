@@ -1494,3 +1494,12 @@ values ( 0000, '이름', '직책', 1111, sysdate, 800, 0, 10);
 select * from EMP_FK;
 select * from DEPT_FK;  
 desc EMP_FK; 
+
+
+
+/* 250523(금) */
+/* ERD 연습 */
+select * from EMP;
+desc EMP;
+
+desc DEPT;

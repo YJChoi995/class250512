@@ -251,14 +251,22 @@ group by nvl2(COMM, 'O', 'X');
 (단, SQL-99 이전 방식과 SQL-99 방식을 각각 사용하라)
 출력 : DEPTNO, DNAME, EMPNO, ENAME, SAL */
 -- SQL-99 이전 방식
+select D.DEPTNO, D.DNAME, E.EMPNO, E.ENAME, E.SAL
+  from EMP E, DEPT D
+ where E.DEPTNO = D.DEPTNO
+       and SAL > 2000;
 
 -- SQL-99 방식
+select D.DEPTNO, D.DNAME, E.EMPNO, E.ENAME, E.SAL
+from EMP E left outer join DEPT D on(E.DEPTNO = D.DEPTNO)
+where SAL > 2000;
 
 
 /* Q2. 부서별 평균 급여, 최대 급여, 최소 급여, 사원 수를 출력
 (단, SQL-99 이전 방식과 SQL-99 방식을 각각 사용하라) 
 출력: DEPTNO, DNAME, AVG_SAL, MAX_SAL, MIN_SAL, CNT */
 -- SQL-99 이전 방식
+sele
 
 -- SQL-99 방식
 
