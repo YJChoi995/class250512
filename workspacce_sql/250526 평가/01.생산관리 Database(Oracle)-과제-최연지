@@ -1,0 +1,20 @@
+/*【문항1】 emp 테이블에는 사원명(ename, varchar2(10))과 사원번호(empno, number(4))가  있습니다. 
+다음 사항을  만족하는  sql을  작성하시오.
+1. 테이블의 사원번호(empno)와 사원명(ename)만 출력 
+2. 사원번호가 높은 숫자부터 낮은 숫자 순서로 출력 
+3. 보안을 위해 앞 2자리는 그대로 출력하고 나머지는 * 기호로 표시(출력 예시: 73**) */
+select rpad(substr(empno, 1, 2), length(empno), '*') as EMPNO, 
+       ename
+from EMP
+order by empno desc;
+
+/* 【문항2】 
+emp 테이블에는 사원명(ename,  varchar2(10)),  사원번호(empno,  number(4)),  부서번호(deptno,  number(2))가 있습니다.
+dept  테이블에는  부서번호(deptno,  number(2)),  부서이름(dname,  varchar2(14)),  부서위치(loc,  varchar2(13))가 있습니다.
+다음  사항을  만족하는  sql을  작성하시오.
+1.  사원번호(empno),  사원명(ename),  부서이름(dname),  부서위치(loc)를  출력하세요 
+2.  부서이름(dname)  기준으로  내림차순  정렬하세요 */
+select E.empno, E.ename, D.dname, D.loc
+from EMP E, DEPT D
+where E.deptno = D.deptno
+order by D.dname desc;
