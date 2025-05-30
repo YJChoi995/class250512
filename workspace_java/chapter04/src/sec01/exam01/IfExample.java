@@ -1,5 +1,7 @@
 package sec01.exam01;
 
+import java.util.Scanner;
+
 public class IfExample {
 	public static void main(String[] args) {
 		int score = 59;
@@ -176,28 +178,114 @@ public class IfExample {
 		
 		// 문제 풀기
 		// Q1. int 변수에 임의의 수를 넣고 그 수가 "양수", "0", "음수" 구분하여 출력
-		int abc = (int)(Math.random() * -100) + 1;
+		System.out.println("Q1. 숫자를 입력하시오: ");
+		Scanner scanner = new Scanner(System.in);
+		
+		int abc = scanner.nextInt();
 	
 		if (abc == 0) { 
-			System.out.println("랜덤한 숫자: " + abc);
+			System.out.println("숫자: " + abc);
 		} else if (abc < 0) {
-			System.out.println("랜덤한 숫자는: " + abc+ ", 음수");
+			System.out.println("숫자는: " + abc+ ", 음수");
 		} else {
-			System.out.println("랜덤한 숫자는: " + abc+ ", 양수");
+			System.out.println("숫자는: " + abc+ ", 양수");
 		}
 		
 		// Q2. a와 b 두 수 중에서 큰 값을 출력
+		System.out.println("Q2. 숫자 두 개를 입력하시오: ");
+		
+		int kc1 = scanner.nextInt();
+		int kc2 = scanner.nextInt();
+		
+		if (kc1 > kc2) { 
+			System.out.println(kc1 + "과 " + kc2 + " 중 큰 수는 :" + kc1);
+		} else if (kc1 < kc2) { 
+			System.out.println(kc1 + "과 " + kc2 + " 중 큰 수는 :" + kc2);
+		} else if( kc1 == kc2) {
+			System.out.println(kc1 + "과 " + kc2 + "는 같은 수입니다");
+		}
+		
 		
 		// Q3. 시간과 분이 있을 때 35분이 지난 시간을 출력
+		System.out.println("Q3. 몇 시:  몇 분: 입니까(24시간제)");
+		
+		int h1 = scanner.nextInt();
+		int m1 = scanner.nextInt();
+		
+		if (h1 <= 24 && m1 <= 60) {
+			System.out.println("지금은 " + h1 + "시 " + m1 + "분 입니다");
+			int h2 = h1 + 1;
+			int m2 = m1 + 35;
+			if(m2 > 60) {
+				m2 = m2-60;
+				System.out.println("35분 후는 " + h2 + "시 " + m2 + "분 입니다");
+			} else if(m2 <= 60) {
+				System.out.println("35분 후는 " + h1 + "시 " + m2 + "분 입니다");
+			}
+			
+		} else if (h1 > 24 || m1 > 60) {
+			System.out.println("유용하지 않은 시간 값입니다");
+		}
+		
 		
 		// Q4. 어떤 수가 15와 20 사이(포함)에 있는가?
+		System.out.println("Q4. 숫자를 입력하시오: ");
+		
+		int q4 = scanner.nextInt();
+		if(q4 >= 15 && q4 <= 20) {
+			System.out.println("15와 20 사이입니다");
+		} else if(q4 < 15 || q4 > 20) {
+			System.out.println("15와 20 사이에 포함되지 않습니다");
+		}
+		
 		
 		// Q5. 통장 잔액이 15000원 있을 때 출금액에 따라 
 		// "잔액이 부족합니다.", "얼마 출금했고 얼마 남았습니다.", "정확히 입력해주세요."
+		System.out.println("Q5. 출금액을 입력하시오: ");
+		
+		int q5 = 15000;
+		int q51 = scanner.nextInt();
+		int q52 = q5 - q51;
+		
+		if (q52 >= 0) {
+			System.out.println(q51 + "원을 출금했고 " + q52 + "원 남았습니다.");
+		} else if (q52 < 0) {
+			System.out.println("출금액: " + q51);
+			System.out.println("잔액이 부족합니다. 잔액: " + q5);
+		} 
+		
 		
 		// Q6. 입력한 값에 따라 
 		// (ex. 125) "100보다 큰 수이며, 양수이고, 홀수입니다"
 		// (ex. -6) "100보다 작은 수이며, 음수이고, 짝수입니다."
+		System.out.println("Q6. 숫자를 입력하시오: ");
+		
+		int q6 = scanner.nextInt();
+		
+		if(q6 > 100) {
+			if (q6%2  == 1) {
+				System.out.println("100보다 큰 수이며, 양수이고, 홀수입니다");
+			} else if(q6%2 == 0) {
+				System.out.println("100보다 큰 수이며, 양수이고, 짝수입니다");
+			}
+		} else if(q6 < 100 && q6 > 0) {
+			if (q6%2 == 1) {
+				System.out.println("100보다 작은 수이며, 양수이고, 홀수입니다");
+			} else if(q6%2 == 0) {
+				System.out.println("100보다 작은 수이며, 양수이고, 짝수입니다");
+			}  
+		} else if(q6 < 0) {
+			if (q6%2 == -1) {
+				System.out.println("100보다 작은 수이며, 음수이고, 홀수입니다");
+		    } else if(q6%2 == 0) {
+		    	System.out.println("100보다 작은 수이며, 음수이고, 짝수입니다");
+		    }
+		} else if(q6 == 100) {
+				System.out.println("100과 같습니다");
+		} else if(q6 == 0) {
+			System.out.println("0은 100보다 작은 수 이며, 양수도 음수도 아니고, 짝수도 홀수도 아닙니다.");
+		}
+		
 		
 		// Q7. 어제 온도(2), 오늘 온도(영하 3도) 변수 두 개
 		// "오늘 온도는 영하 3도 입니다. 어제보다 5도 낮습니다." 출력
