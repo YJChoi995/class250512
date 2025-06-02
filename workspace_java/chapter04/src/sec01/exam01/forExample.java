@@ -1,5 +1,7 @@
 package sec01.exam01;
 
+import java.util.Scanner;
+
 public class forExample {
 	public static void main(String[] args) {
 		
@@ -199,10 +201,11 @@ public class forExample {
 		System.out.println();
 		
 	// 2단계
-	String space = ".";
 	/*
 	 	+.+.+.+.+.
 	 */
+		String space = ".";
+		
 		for(int j=1; j<=5; j++) {
 			System.out.print(mark);
 			System.out.print(space);
@@ -427,5 +430,25 @@ public class forExample {
 	    +++++ 
 	*/
 		
+		System.out.print("\n12단계\n숫자를 입력하시오: ");
+		Scanner scanner = new Scanner(System.in);
+		int z = scanner.nextInt();
+		
+		for (int y=1; y<=z; y++) {
+			for (int j=y; j<=z-1; j++) {
+				System.out.print(space);
+			}
+			for (int j=1; j<=y; j++) {
+				System.out.print(mark);
+			}
+			for (int j=2; j<=y; j++) {
+				System.out.print(mark);
+			}
+			for (int j=y; j<=z-1; j++) {
+				System.out.print(space);
+			}
+			System.out.println();
+		}
+
 	}
 }
