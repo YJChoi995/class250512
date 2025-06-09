@@ -1,4 +1,4 @@
-package review250530;
+package review2025;
 
 public class review250530 {
 	public static void main(String[] args) {

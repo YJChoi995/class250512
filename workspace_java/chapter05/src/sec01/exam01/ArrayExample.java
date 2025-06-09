@@ -62,13 +62,13 @@ public class ArrayExample {
 		// 무작위 숫자를 가지는 배열을 순서대로 출력하기
 		int[] q = {4,5,7,8,2};
 		for (int i=0; i<q.length; i++) {
-			System.out.println("f[" + i + "] : " + f[i]);
+			System.out.println("f[" + i + "] : " + q[i]);
 		}
 		// 무작위 숫자를 가지는 배열을 그대로 복사하여 순서대로 출력하기
 		int[] q2 = new int[q.length];
 		for(int i=0; i<q2.length; i++) {
 			q2[i] = q[i];
-			System.out.println("f2[" + i + "] : " + f2[i]);
+			System.out.println("f2[" + i + "] : " + q2[i]);
 		}
 		
 		
@@ -187,8 +187,7 @@ public class ArrayExample {
 		System.out.print("Q8-1. 숫자로만 된 임시비밀번호 8자리 생성 : ");
 		int[] f = new int[8];
 		for (int i=0; i<f.length; i++) {
-			int random = (int)(Math.random()*9)+1;
-			f[i] = random;
+			f[i] = (int)(Math.random()*9)+1;
 			System.out.print(f[i] + " ");
 		}
 				
@@ -197,8 +196,7 @@ public class ArrayExample {
 		System.out.print("Q8-2. 소문자만 된 임시비밀번호 8자리 생성 : ");
 		char[] g = new char[8];
 		for (int i=0; i<g.length; i++) {
-			char random = (char)((int)(Math.random()*26) + 97); // 아스키 코드 : a~z(97-122)
-			g[i] = random;
+			g[i] = (char)((int)(Math.random()*26) + 97); // 아스키 코드 : a~z(97-122)
 			System.out.print(g[i] + " ");
 		}
 				
@@ -223,12 +221,20 @@ public class ArrayExample {
 		for(int i=4; i<8; i++) {
 			pw[i] = (char)('0' + (int)(Math.random() * 10)); 
 		}
-				
+		
+		// 배열 랜덤으로 섞기
+		for(int i=0; i<pw.length; i++) {
+			int j = (int)(Math.random()*7)+1;
+			char temp = pw[i];
+			pw[i] = pw[j];
+			pw[j] = temp;
+		}
+		
 		// 출력하기
 		for(int i=0; i<pw.length; i++) {
 			System.out.print(pw[i] + " ");
 		}
-				
+		
 		System.out.println("\n");
 				
 				
@@ -288,24 +294,43 @@ public class ArrayExample {
 						
 		// Q10. 로또 6개 생성, 단 중복 없이
 		System.out.print("Q10. 로또 번호 6개 생성 : ");
-		int[] rotto = new int[6];
+		int[] lotto = new int[6];
 				
-		for (int i=0; i<rotto.length; i++) {
-			rotto[i] = (int)(Math.random() * 45)+1;
+		for (int i=0; i<lotto.length; i++) {
+			lotto[i] = (int)(Math.random() * 45)+1;
 					
 			// 중복 검사
 			for(int j=0; j<i; j++) {
-				if(rotto[i] == rotto[j]) {
+				if(lotto[i] == lotto[j]) {
 					i--; // 중복이면 뒤로가서 다시 출력
 					break;
 				}
 			}
 		}
-		for (int i=0; i<rotto.length; i++) {
-			System.out.print(rotto[i] + " "); // 출력하기
+		for (int i=0; i<lotto.length; i++) {
+			System.out.print(lotto[i] + " "); // 출력하기
 		}
-	
 		
+		System.out.println();
 		
+		// 선생님 답
+		System.out.print("Q10. 로또 번호 6개 생성(선생님 답) : ");
+		
+		boolean flag = false;
+		
+		for (int i=0; i<lotto.length; i++) {
+			do {
+				flag = false;
+				lotto[i] = (int)(Math.random() * 45)+1;
+				for(int j=0; j< i; j++) {
+					if(lotto[j] == lotto[i]) {
+						flag = true;
+					}	
+				}
+			} while (flag);
+		}
+		for (int i=0; i<lotto.length; i++) {
+			System.out.print(lotto[i] + " "); // 출력하기
+		}
 	}
 }
