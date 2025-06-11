@@ -21,6 +21,11 @@ public class CarExample {
 			System.out.println("gas를 주입하세요");
 		}
 		
+		
+		Car2 c2 = new Car2();
+		c2.setGas(3);
+		c2.run();
+		
+		
 	}
-
 }

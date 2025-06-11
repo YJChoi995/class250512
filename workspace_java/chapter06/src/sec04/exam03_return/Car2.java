@@ -1,8 +1,9 @@
 package sec04.exam03_return;
 
-public class Car {
+public class Car2 {
 	// 필드
 	int gas;
+	int speed;
 	
 	// 메소드
 	void setGas(int g) {
@@ -46,11 +47,17 @@ public class Car {
 			if(gas > 0) {
 				System.out.println("달립니다.(gas잔량: " + gas + ")");
 				gas--;
+				setSpeed(gas*10);
 			} else {
 				System.out.println("멈춥니다.(gas잔량: " + gas + ")");
 				return;
 			}
 		}
+	}
+	
+	void setSpeed(int s) {
+		speed = s;
+		System.out.println("속도를 " + speed + "로 바꿉니다");
 	}
 	
 }
