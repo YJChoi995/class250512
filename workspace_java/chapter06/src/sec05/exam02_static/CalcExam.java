@@ -13,7 +13,22 @@ public class CalcExam {
 		c2.color = "빨강";
 		System.out.println("c2.pi : " + c2.pi) ;
 		
+		
+		
+		// 2. test 메소드 사용하기
+		test();
+		
 
 	}
+	
+		// 1. 메소드명 test 만들기
+		// 전달인자/리턴타입 없음
+		// 그냥 아무 말이나 출력
+	
+		static void test(){
+			System.out.println("!");
+		}
+		
+	
 
 }
