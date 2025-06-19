@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sample</title>
+</head>
+<body>
+    
+    <section>
+        <article>
+            <!-- 2. 상대주소 -->
+            <!-- 내 위치를 기준으로 삼는 주소
+                . : 내 폴더
+                .. : 부모 폴더
+
+                가장 마지막 / 이후의 주소를 갈아 치운다
+            -->
+            <strong>&lt;상대 주소&gt;</strong><br>     
+            <a href="../06_hyperlink.html">../06_hyperlink.html</a><br>
+            내 위치를 기준으로 삼는 주소<br>
+            . : 내 폴더<br>
+            .. : 부모 폴더<br>
+        </article>
+    <hr>
+        <article>
+            <!-- 3. 절대 주소 -->
+            <!-- 
+                1. 프로토콜(http://)로 시작하거나
+                2.  //로 시작하거나(http://)
+                3. /로 시작하거나 
+            --> 
+            <strong>&lt;절대 주소&gt;</strong><br>  
+            1. 프로토콜(http://)로 시작하거나<br>
+            2.  //로 시작하거나(http://)<br>
+            3. /로 시작하는 것<br>
+            &nbsp;&nbsp;3-0. 주소체계란 ip:port/주소들<br>
+            &nbsp;&nbsp;3-1. ip:port 다음 나오는 /를 기존 주소라고 한다<br>
+            &nbsp;&nbsp;<a href="https://www.naver.com/" target="blank">ex)https://www.naver.com/</a><br>
+            &nbsp;&nbsp;<a href="//www.naver.com/" target="blank">ex)//www.naver.com/</a><br>
+            <!-- http://127.0.0.1:5500/html/06_hyperlink.html -->
+            &nbsp;&nbsp;<a href="html/06_hyperlink.html" target="blank">html/06_hyperlink.html</a><br>
+            &nbsp;&nbsp;<a href="/html/06_hyperlink.html" target="blank">/html/06_hyperlink.html</a>
+
+        </article>
+    </section>
+</body>
+</html>

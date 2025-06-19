@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>08_form.html</title>
+</head>
+<body>
+    <form>
+        <h1>Form 1</h1>
+        <!-- type="text" -->
+        text(기본값) : <input type="text"><br>
+        text(value) : <input type="text" value="초기값"><br>
+        text(placeholder) : <input type="text" placeholder="플레이스 홀더"><br>
+        text(readonly) : <input type="text" value="초기값" readonly="readonly"><br>
+        text(disabled) : <input type="text" value="초기값" readonly="disabled"><br>
+        <br>
+        text(password) : <input type="password" placeholder="비밀번호 입력"><br>
+        <br>
+
+        <!-- type="radio" --> <!-- 하나만 선택해야 할 때-->
+        radio:<br>
+        성별 : 
+        <input type="radio" name="gender" value="male">남자
+        <input type="radio" name="gender" value="female">여자
+        <input type="radio" name="gender" value="Not specified" checked="checked">비공개
+        <br>
+        참석 :
+        <input type="radio" name="Attendance">참석
+        <input type="radio" name="Attendance" checked="checked">미참석
+        <br><br>
+
+        <!-- type="checkbox" -->  <!-- 여러 개 선택 가능 할 때-->
+        checkbox :
+        <input type="checkbox" name="topping" value="1">생크림
+        <input type="checkbox" name="topping" value="2">초코칩
+        <input type="checkbox" name="topping" value="3">시럽
+        <input type="checkbox" name="topping" value="4">샷추가
+
+        <input type="checkbox" name="topping" value="5" id="pearl">
+        <label for="pearl">펄추가(label)</label>
+
+        <label for="popcorn">
+            <input type="checkbox" value="6" id="popcorn">팝콘추가
+        </label>
+        <br><br>
+        
+        <!-- type="submit" --> 
+        submit : <input type="submit" value="전송">
+        <br><br>
+
+        <!-- type="reset" --> 
+        reset : <input type="reset">
+        <br><br>
+
+        <!-- type="file" -->  <!-- 파일 첨부할 때 -->
+        file : <input type="file">
+        <br><br>
+
+        <!-- type="button" --> 
+        input button : <input type="button" value="버튼">
+        <br>
+        button : <button type="button">버튼명</button>
+        <br><br>
+
+        <!-- type="hidden" --> 
+        hidden : <input type="hidden" name="seceret" value="1234">
+        <br><br>
+
+        <!-- type="date" --> 
+        date : <input type="date" value="2025-06-19"><br>
+
+        <!-- type="color" --> 
+        color : <input type="color"><br>
+        
+        <!-- type="number" --> 
+        number : <input type="number"><br>
+
+        <!-- type="range" --> 
+        range : <input type="range"><br>
+        range 속성 : <input type="range" min="10" max="100" step="10"><br>
+        <br><br>
+
+        <!-- textarea -->
+        <textarea>문자를 입력하세요</textarea>
+        <br><br>
+
+        <!-- select -->
+        <select name="변수명" size="3" multiple>
+            <option value="전달값1">선택항목1</option>
+            <option value="전달값2">선택항목2</option>
+            <option value="전달값3">선택항목3</option>
+            <option value="전달값n">선택항목n</option>
+        </select>
+
+    </form>
+
+    <hr>    
+    <!-- 
+        form의 method 종류 : get, post
+        method의 기본값 : get
+
+        action : 전송할 주소
+        action의 기본값 : 지금 내 주소
+    -->
+    <h1>Form 2</h1>
+    <form method="get" action="https://search.naver.com/search.naver?">
+        <input type="text" name="query">
+        <input type="submit" value="네이버 검색">
+    </form>
+
+    <form method="get">
+        <input type="text" name="query" placeholder="get 연습">
+        <input type="submit" value="get 연습">
+    </form>
+
+    <form method="post">
+        <input type="text" name="query" placeholder="post 연습">
+        <input type="submit" value="post 연습">
+    </form>
+    <br>
+    <br>
+
+    <form method="get" action="https://www.google.com/search">
+        <input type="text" name="q" placeholder="검색할 내용을 입력하세요">
+        <input type="submit" value="구글 검색">
+    </form>
+
+    <hr> 
+    <h1>Form 3</h1>
+    <form>
+        <fieldset>
+            <legend>필드의 이름</legend>
+            필드 안에 넣을 내용
+        </fieldset>
+    </form>
+
+    <hr> 
+    <h1>Form 4</h1>
+    <h2>회원 정보</h2>
+    <hr><hr> 
+    <form>
+        <fieldset>
+            <legend>인적사항</legend>
+            이름 : <input type="text" placeholder="ID 입력요망"> &nbsp;주민번호 : <input type="text">-<input type="password"><br>
+            국적 : <select><option value="내국인" selected>내국인</option><option value="외국인">외국인</option></select><br>
+            취득자격증 : <select name="license">
+                            <option value="정보처리기사">정보처리기사</option>
+                            <option value="정보처리산업기사">정보처리산업기사</option>
+                            <option value="정보처리기능사">정보처리기능사</option>
+                        </select>
+        </fieldset>
+        <fieldset>
+            <legend>성별 & 학년</legend>
+            성별 : <label><input type="radio" name="gender" value="Male">남성</label>
+                   <label><input type="radio" name="gender" value="Female">여성</label>
+                   <label><input type="radio" name="gender" value="private">비공개</label><br>
+            학년 : <label><input type="radio" name="grade" value="freshman">1학년</label>
+                   <label><input type="radio" name="grade" value="sophomore">2학년</label>
+                   <label><input type="radio" name="grade" value="junior">3학년</label>
+                   <label><input type="radio" name="grade" value="senior">4학년</label>
+        </fieldset>
+        <fieldset>
+            <legend>취미</legend>
+            <input type="checkbox" name="hobby" value="독서">독서
+            <input type="checkbox" name="hobby" value="바둑">바둑
+            <input type="checkbox" name="hobby" value="골프">골프
+            <input type="checkbox" name="hobby" value="등산">등산
+            <input type="checkbox" name="hobby" value="여행">여행
+            <input type="checkbox" name="hobby" value="기타">기타
+        </fieldset>
+        <fieldset>
+            <legend>메모사항</legend>
+            <textarea rows="2" cols="50" name="memo">메모글을 넣어주세요</textarea>
+        </fieldset>
+        첨부 서류 : <input type="file">
+        <hr>
+        <input type="submit" value="저장하기">
+        <input type="reset" value="다시 입력하기">
+    </form>
+
+
+</body>
+</html>
