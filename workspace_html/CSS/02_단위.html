@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>02_단위.html</title>
+    <style>
+        /* 해당 디스플레이에서 절대적인 값 */ /* px은 자기 자긴만 바뀌는데 */
+        #pixel{  font-size: 10px; }
+        #pixel .box1{ 
+            font-size: 16px; 
+
+            background-color: rgb(255,90,90);
+        }  
+        #pixel .box1 .box2{ 
+            font-size: 30px;
+        }
+        #pixel .box1 .box2 .box3{ font-size: 50px; }
+
+        /* 상대적인 크기 */ /* %는 자식도 같이 커짐 */
+        #percent .box1{ 
+            font-size: 150%; 
+
+            background-color: rgb(255,179,48);
+        }
+        #percent .box1 .box2{ font-size: 150%; } 
+        #percent .box1 .box2 .box3{ font-size: 150%; } 
+
+        /* em은 %와 역할이 같음 */ /* 1em = 100% */
+        #em .box1{ 
+            font-size: 1.5em; 
+            border : 1px solid red;
+            margin : 10px;
+        }
+        #em .box1 .box2{ 
+            font-size: 1.5em; 
+            border : 1px solid red;
+            margin : 10px;
+        } 
+        #em .box1 .box2 .box3{ 
+            font-size: 1rem; 
+            border : 1px solid red;
+            margin : 10px;
+        } 
+
+        #v1, #v2, #v3, #v4{
+            border : 1px solid green;
+            margin : 10px;  
+        }
+
+        /* viewport height 화면의 높이를 1/100로 쪼갠 크기 */
+        #v1 {
+            height: 100vh;
+        }
+
+        /* viewport width 화면의 너비를 1/100로 쪼갠 크기 */
+        #v2 {
+            width: 100vw;
+        }
+
+        /* viewport min : 너비와 높이 중 작은 값을 화면의 너비를 1/100로 쪼갠 크기 */
+        #v3 {
+            height: 100vmin;
+        }
+
+        /* viewport max : 너비와 높이 중 큰 값을 화면의 너비를 1/100로 쪼갠 크기 */
+        #v4 {
+            height: 100vmax;
+        }
+
+
+
+    </style>
+
+</head>
+<body>
+    <h1>pixel 비교</h1>
+    기본글씨 abc ABC 123
+        <div id="pixel">
+            10px
+            <div class="box1">
+                16px
+                <div class="box2">
+                30px
+                    <div class="box3">
+                        50px
+                    </div>
+                </div>
+            </div>
+        </div>
+    <h1>percent 비교</h1>
+        <div id="percent">
+            <div class="box1">
+                150%
+                <div class="box2">
+                    150%
+                    <div class="box3">
+                        150%
+                    </div>
+                </div>
+            </div>
+        </div>    
+
+    <h1>em 비교</h1>
+        <div id="em">
+            <div class="box1">
+                1.5em
+                <div class="box2">
+                    1.5em
+                    <div class="box3">
+                        1rem
+                    </div>
+                </div>
+            </div>
+        </div>   
+
+    <h1>viewport</h1>
+        <div id="v1">v1 vh</div>
+        <div id="v2">v2 vw</div>
+        <div id="v3">v3 vmin</div>
+        <div id="v4">v4 vmax</div>
+    
+</body>
+</html>

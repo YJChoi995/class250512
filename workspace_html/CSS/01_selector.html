@@ -4,69 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>01_selector.html</title>
-    <style>
-        /* CSS 주석 */
-
-        /* 전체 선택자 */
-        * {
-            color : red;
-        }
-
-        /* tag 선택자 */
-        body {background: skyblue;}
-        h2 {font-size: 500%;}
-
-        
-
-        /* id 선택자 */
-        #a1 { color: black; }
-        #div1 { background-color: yellow}
-
-        /* class 선택자 */
-        .c1 { background-color: greenyellow; }
-        .bigText { font-size: 30px;}
-
-        /* 마우스 올렸을 때 */
-        #div1:hover { background-color: blue; } 
-
-        /* 마우스 클릭 했을 때 */
-        #div1:active { font-size: 200%; color: grey; }
-
-        /* 포커스를 가졌을 때 */
-        .text1:focus { background-color: yellow; }
-
-        /* 자식 선택자 */
-        /* 누군가의 첫번째 자식 */
-        li:first-child { color:blue;}
-        ul:first-child { font-size: 30px; }
-
-        /* 실제 등장하는 요소 중 첫번째 */
-        ul:first-of-type { text-decoration:underline; }
-        /* n번째 자식 */
-        tr:nth-child(2n-1) {
-            background-color: yellow;
-        }
-
-        /* before after */
-        h3:before { 
-            content: "BEFORE";
-            font-size: 11px;
-            color:black;
-        }
-        h3:after { 
-            content: "AFTER";
-            font-size: 11px;
-            color:black;
-        }
-
-        /* 다중 선택자 */ 
-        li, h3 { border: 1px solid red;}
-
-        /* 후손 선택자 */
-        #ol > li { font-size: 20px; }
-
-
-    </style>
+    
+    <link rel="stylesheet" href="./esset/01_selector.css" type="text/css">
 </head>
 <body>
     <h1 title="안녕?">Hello, World!</h1>
@@ -123,12 +62,17 @@
         <li>2</li>
         <li>
             <ol>
-                <li>3-1</li>
+                <li data-seq="">3-1</li>
                 <li>3-2</li>
                 <li>3-3</li>
             </ol>
         </li>
     </ol>
+
+    <a href="http://naver.com" id="naver">http://naver.com</a><br>
+    <a href="http://google.com" id="google">http://google.com</a><br><br>
+
+    <input type="checkbox"><span>체크</span>
 
 
 </body>
