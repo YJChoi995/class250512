@@ -1,0 +1,70 @@
+#div{
+    border: 1px solid black;
+}
+
+
+.block{
+    border: 1px solid red;
+    width: 100px;
+    height: 50px;
+    margin: 0 auto;
+}
+
+
+.inline{
+    border: 1px solid red;
+
+    /* 너비 높이 줄 수 없다 */
+    width: 100px;
+    height: 50px;
+
+    /* 좌우만 되고 위아래 안됨 */
+    margin: 30px 50px;
+
+    /* 좌우만 되고 위아래 안됨. 단, border는 밀어짐 */
+    padding: 20px;
+
+    display: block;
+}
+
+.bg_blue{
+    background-color: blue;
+    color: white;
+}
+
+.parent{
+    border: 1px dotted purple;
+    width: 100%;
+}
+
+.parent > div {
+    border: 1px dashed blue;
+    width: 300px;
+    height: 50px; 
+
+    display: inline-block;
+
+    /* inline, inline-block에만 적용 됨 */
+    vertical-align: top;
+}
+
+.parent > div:hover {
+  background-color: blue; color: white;
+}
+
+.hide{
+    display: none;
+}
+
+.table{
+    display: table;
+}
+
+.table .td{
+    display: table-cell;
+    border: 1px solid red;
+    height: 100px;
+    width: 200px;
+    text-align: center;
+    vertical-align: middle;
+}
