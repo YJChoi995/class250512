@@ -1,0 +1,157 @@
+body{
+    height: 200px;
+}
+
+div {
+    border: 1px solid red;
+}
+
+.parent {
+    background-color: greenyellow;
+    width: 100px;
+    margin: 20px;
+}
+
+.parent .child{
+    background-color: rgba(0,0,255,0.5);
+    width: 90px;
+}
+
+.relative {
+    /*
+        원래 위치를 기준으로 좌표값만큼 이동
+        top, left, right, bottom
+        원래 내가 가지고 있던 공간이 유지된다(남아있다)
+    */
+    position: relative;
+    top: 10px;
+    left: -10px;
+}
+
+.absolute {
+    /* 부모 중에 relative(없으면 body) 기준으로 이동 */
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.absolute-bottom {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.fixed {
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    line-height: 60px;
+
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+}
+
+.sticky {
+    position: sticky;
+    top: 20px;
+}
+
+.rel {
+    position: relative;
+}
+
+.rel:hover {
+    z-index: 999;
+}
+
+.z1 {
+    background-color: blueviolet;
+
+    top: 18px;
+    left: 15px;
+}
+
+.z2 {
+    background-color: brown;
+
+    top: 16px;
+    left: -15px;
+
+    z-index: 1;
+}
+
+.z3 {
+    background-color: burlywood;
+
+    top: 10px;
+    left: -10px;
+}
+
+
+ul.main {
+    background-color: yellow;
+}
+
+ul.sub {
+    background-color: turquoise;
+
+    position: relative;
+    top: -17px;
+    left: 10px;
+
+    display: none;
+}
+
+ul.main:hover + ul {
+    display: block;
+}
+
+ul.sub:hover {
+    display: block;
+}
+
+.p1 {
+    position: relative;
+}
+
+.c1 {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.p2 {
+    background-color: bisque;
+    width: 200px;
+    height: 200px;
+
+    margin-top: 50px;
+
+    position: relative;
+}
+
+.c2 {
+    width: 100px;
+    height: 100px;
+
+    position: absolute;
+    top: calc( (200px/2) - (100px/2) );
+    left: calc( 50% - (100px/2) );
+}
+
+
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+.dropdown-content {
+    display: none; 
+    position: absolute;
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}

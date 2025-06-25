@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>quiz250625_01.html</title>
+    <style>
+        .main {
+            border: 1px solid black;
+            position: relative;
+            height: 100vh;
+        }
+
+        .main .lilmenu {
+            width: 10vw;
+            margin: 2px;
+        }
+
+        .main .lilmenu img:hover {
+            border: 1px solid blue;
+        }
+
+        .img-view {
+            display: none;
+        }
+
+         .main .lilmenu img:hover + .img-view {
+            display: block;
+
+            position: absolute;
+            top: 1px;
+            left: 10vw;
+            margin-left: 10px;
+        }
+
+
+
+    </style>
+</head>
+<body>
+    <section class="main">
+        <div class="lilmenu">
+            <img src="/루루.png" width="100%">
+            <div class="img-view">
+                <img src="/루루.png">
+            </div>
+            <img src="/루루2.png" width="100%">
+            <div class="img-view">
+                <img src="/루루2.png">
+            </div>
+            <img src="/장군이.png" width="100%">
+            <div class="img-view">
+                <img src="/장군이.png">
+            </div>
+        </div>
+    </section>
+    
+</body>
+</html>
