@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>09_float.html</title>
+    <style>
+        article img{
+            border: 1px solid red;
+            float: left;
+        }
+
+        .box{
+            border: 1px solid red;
+            height: 100px;
+            width: 100px;
+            margin: 10px;
+        }
+
+        .box.left{
+            float: left;
+            border: 1px solid blue;
+        }
+
+        .box.right{
+            float: right;
+        }
+
+        .d1{
+            background-color: red;
+        }
+
+        .d2 {
+            /* width: 100%; */
+            background-color: yellow;
+        }
+
+        .d3 {
+            background-color: aqua;
+        }
+
+        .clear {
+            clear: both;
+        }
+
+        .clearfix:after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+
+        .menu {
+            text-align: center;
+        }
+
+        .logo{
+            background-color: aquamarine;
+            width: 100px;
+
+            display: inline-block;
+        }
+
+
+    </style>
+</head>
+<body>
+    <article>
+        <img src="/장군이.png"
+             width="60px">
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quasi blanditiis corrupti aperiam suscipit, minima exercitationem amet consectetur voluptas, pariatur eaque voluptatibus saepe. Minus cum officia ad explicabo consequatur minima repellat.
+    </article>
+    <div class="clear: both;"></div>
+
+    <div class="box left">1</div>
+    <div class="box left">2</div>
+    <div class="box right">3</div>
+    <div class="box right">4</div>
+    <div class="clear: both;"></div>
+
+    <!-- <div>글씨 blablabla</div> -->
+
+    <!-- <div style="overflow: hidden;"> -->
+    <div>
+        <div class="box d1 left">d1</div>
+        <div class="box d2 right">d2</div>
+        <div class="clear"></div>
+    </div>
+    <div class="d3">d3</div>
+
+    <div class="clearfix">
+        <div class="box b1 left">d11</div>
+        <div class="box b2 right">d22</div>
+    </div>
+
+    <div>글씨 몇개</div>
+
+    <div class="clearfix menu">
+        <div class="box left">왼쪽 메뉴</div>
+        <div class="logo">가운데 메뉴</div>
+        <div class="box right">오른쪽 메뉴</div>
+    </div>
+
+
+</body>
+</html>

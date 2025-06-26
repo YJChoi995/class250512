@@ -2,38 +2,34 @@ body{
     background-color: #d9dae0;
 }
 
-
-
 #page-body {
+    width: 80%;
     margin: 0 auto;
     text-align: center;
     color: black;
+
+    border: 1px solid red;
 }
 
-#page-body .page-title {
+.page-title {
     width: 100%;
     font-size: 2.25rem;
     word-wrap: break-word;
 }
 
-#page-body .rooms-list {
-    position: relative;
-    display: inline;
-    margin: 0;
-    padding: 0;
-    width: 100%;
+.room {
+    display: inline-block;
 
-    border: 1px solid white;
+    width: 30%;
+    max-width: 70%;
+    min-width: 200px;
     background-color: white;
     word-wrap: break-word;
-}
-
-#page-body .rooms-list .room {
-    display: inline-block;
-    width: 100%;
     margin: 10px;
+
+    border: 1px solid black;
 }
 
-#page-body .rooms-list .room > img{
-    
+.room img {
+    width: 100%;
 }

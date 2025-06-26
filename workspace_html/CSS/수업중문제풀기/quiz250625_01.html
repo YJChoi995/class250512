@@ -11,20 +11,25 @@
             height: 100vh;
         }
 
-        .main .lilmenu {
+        .main.lilmenu {
             width: 10vw;
-            margin: 2px;
+            margin: 5px;
         }
 
-        .main .lilmenu img:hover {
+        .main.lilmenu img:hover {
             border: 1px solid blue;
         }
 
         .img-view {
             display: none;
+
+            position: absolute;
+            top: 5px;
+            left: 10vw;
+            margin: 5px 10px 0 10px;
         }
 
-         .main .lilmenu img:hover + .img-view {
+         .main.lilmenu img:hover + .img-view {
             display: block;
 
             position: absolute;
@@ -32,9 +37,6 @@
             left: 10vw;
             margin-left: 10px;
         }
-
-
-
     </style>
 </head>
 <body>
@@ -44,14 +46,28 @@
             <div class="img-view">
                 <img src="/루루.png">
             </div>
+
             <img src="/루루2.png" width="100%">
             <div class="img-view">
                 <img src="/루루2.png">
             </div>
+
             <img src="/장군이.png" width="100%">
             <div class="img-view">
                 <img src="/장군이.png">
             </div>
+
+            <img src="/디디.png" width="100%">
+            <div class="img-view">
+                <img src="/디디.png">
+            </div>
+
+            <img src="/모모.png" width="100%">
+            <div class="img-view">
+                <img src="/모모.png">
+            </div>
+
+
         </div>
     </section>
     
