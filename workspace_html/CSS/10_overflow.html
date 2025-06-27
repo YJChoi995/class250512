@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10_overflow.html</title>
+    <style>
+        .p {
+            border: 1px solid grey;
+            width: 100px;
+            height: 100px;
+            margin: 10px;
+        }
+
+        .hidden {
+            overflow: hidden;
+        }
+
+        .scroll{
+            overflow: scroll;
+        }
+
+        .auto {
+            overflow: auto;
+        }
+
+        .parent {
+            border: 1px solid red;
+            width: 300px;
+            white-space: nowrap; /* 한 줄로 만들기 */
+            overflow: auto;
+
+        }
+        .parent div {
+            border: 1px solid blue;
+            width: 100px;
+            margin: 5px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    hidden
+    <div class="p hidden">
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloremque porro et cumque fugiat tempora doloribus velit consequatur sit numquam? Tenetur suscipit reiciendis quisquam voluptate dolorum tempore deserunt nesciunt animi nostrum!
+    </div>
+    <br>
+    scroll
+    <div class="p scroll">
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloremque porro et cumque fugiat tempora doloribus velit consequatur sit numquam? Tenetur suscipit reiciendis quisquam voluptate dolorum tempore deserunt nesciunt animi nostrum!
+    </div>
+    <br>
+    auto
+    <div class="p auto">
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloremque porro et cumque fugiat tempora doloribus velit consequatur sit numquam? Tenetur suscipit reiciendis quisquam voluptate dolorum tempore deserunt nesciunt animi nostrum!
+    </div>
+
+    <div class="parent">
+        <div>항목1</div>
+        <div>항목2</div>
+        <div>항목3</div>
+        <div>항목4</div>
+        <div>항목5</div>
+    </div>
+    
+</body>
+</html>

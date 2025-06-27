@@ -1,0 +1,160 @@
+html, body {
+    width: 100%;
+    min-width: 1080px;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+}
+
+#mainbody {
+    border: 1px solid grey;
+    width: 80%;
+    min-width: 1080px;
+    height: 100%;
+    margin: 0 auto;
+}
+
+.navergnb {
+    border: 1px solid black;
+    position: relative;
+    height: 35px;
+    margin: 0 auto;
+}
+
+header{
+    position: relative;
+    border: 1px solid black;
+    display: block;
+    width: 1080px;  
+    height: 180px;
+    background-image: url(https://ssl.pstatic.net/static/cafe/cafe_pc/bg_default_title_white_180724.png);
+    background-size: 1080px 180px;
+}
+
+.inner_title {
+    position: absolute;
+    bottom: 10px;
+    left: 24px;
+    right: 24px;
+}
+
+.cafe_name {
+    font-size: 40px;
+    line-height: 40px;
+    color: #212121;
+    word-break: keep-all;
+}
+
+.container {
+  display: flex;
+}
+
+
+#menu{
+    border: 1px solid grey;
+    width: 200px;
+    margin: 10px;
+    text-align: center;
+    font-size: 13px;
+}
+
+.cafe_info{
+    width: 100%;
+    border-top: 1px solid black;
+    text-align: left;
+}
+
+.get_in {
+    display: block;
+    height: 38px;
+    margin-bottom: 9px;
+    border-radius: 6px;
+    background-color: #5a5a5a;
+    color: #fff;
+    text-align: center;
+    font-weight: bold;
+    line-height: 38px;
+}
+
+.get_in:hover{
+    text-decoration: underline;
+}
+
+.cafe_chat {
+    border-radius: 6px;
+    border: 1px solid #e5e5e5;
+    background-color: #fff;
+    color: #333;
+    height: 38px;
+    font-size: 13px;
+    line-height: 38px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.cafe_chat:hover {
+    text-decoration: underline;
+}
+
+.cefe_search {
+    height: 32px;
+    overflow: hidden;
+    margin: 8px 0;
+}
+
+.inp {
+    width: 137px;
+    border-radius: 6px 0px 0px 6px;
+}
+
+.btn {
+    width: 40px;
+    border-radius: 0px 6px 6px 0px;
+    font-size: 13px;
+    color: #fff;
+    background-color: #03c75a;
+    text-align: center;
+    cursor: pointer
+}
+
+.list {
+    width: 100%;
+    text-align: left;
+}
+
+.list1, .list2, .list3, .list4 {
+    list-style: none;
+}
+
+.list1, .list2 {
+    border-bottom: 0.5px solid grey;
+}
+
+#content {
+    border: 1px solid black;
+    width: 860px;
+    margin: 10px;
+}
+
+.gate_board {
+    border: 2px solid grey;
+    width: 100%;
+    padding: 30px 0 0 30px;
+}
+
+.article_board {
+    width: 100%;
+    border-bottom: 1px solid black;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 10px;
+
+}
+
+.board_box { 
+    width: 100%;    
+    border: 1px solid gray;
+}
+
+        
