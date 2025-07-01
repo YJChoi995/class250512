@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>03_array.html</title>
+    <script>
+        /* 배열 : 변수의 집합
+        / 한번에 만들어서 index로 관리할 수 있는 변수의 집합 */
+
+        // 배열 변수를 만드는 가장 쉬운 방법
+        let arr = [];
+        // 두번째 방법
+        let arr2 = new Array();
+
+        // 값을 미리 알고 있을 때
+        arr = [1, "글씨", 3];
+        arr2 = new Array(1,2,3);
+
+        console.log('arr[0] : ', arr[0]);
+        arr[0] = 10;
+        console.log('arr[0] : ', arr[0]);
+
+        arr[10] = 10;
+        console.log('arr : ', arr);
+        console.log('arr[20] : ', arr[20]);
+
+        arr["name"] = "이름";
+        console.log('arr["name"] : ', arr["name"]);
+
+        console.log('arr : ', arr.length );
+
+        const str = "휴먼교육센터";
+        console.log('str[0] : ', str[0]);
+
+        for(let i=0; i<str.length; i++) {
+            console.log(str[i]);
+        }
+
+        let 중식 = ['짜장면', '짬뽕', '탕수육', '짬짜면'];
+        let 양식 = ['피자', '파스타', '커틀렛'];
+        let 파스타 = ['까르보나라', '봉골레', '토마토', '로제']
+        let 음식 = [중식, 양식, 파스타];
+
+        for(let i=0; i<음식.length; i++) {
+            for(let j=0; j<음식[i].length; j++) {
+                console.log(음식[i][j]);
+            }
+        }
+
+        arr = [1,2,3,4];
+
+        /* js에서 배열을 ArrayList처럼 메소드 사용하기 */
+        // 마지막에 하나 추가하기
+        arr.push(5);
+        console.log(arr);
+        // 맨 처음에 하나 추가하기
+        arr.unshift(0);
+        console.log(arr);
+
+        // 맨 처음 값을 가져가서 반환
+        // 원본이 바뀜
+        let shift = arr.shift();
+
+        console.log(arr);
+        console.log('shift : ', shift);
+
+        // 맨 마지막 것 하나 빼서 반환
+        let pop = arr.pop();
+
+        console.log(arr);
+        console.log('pop : ', pop);
+
+        // 배열 자체를 거꾸로 바꿔버림
+        arr.reverse();
+        console.log(arr);
+
+        // 배열을 정렬함
+        arr = [7,3,9,5,7,4];
+        arr.sort(); 
+        console.log(arr);
+
+
+
+
+
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

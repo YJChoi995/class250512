@@ -1,0 +1,32 @@
+.header {
+    border: 1px solid gray;
+    box-sizing: border-box;
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+
+    color: #4c527d;
+}
+
+.hero_section .container {
+    border: 1px solid gray;
+    box-sizing: border-box;
+    max-width: 720px;
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+
+    line-height: 1.5;
+    text-align: left;
+}
+
+.left_article {
+    position: relative;
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+}

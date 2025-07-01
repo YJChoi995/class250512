@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>01_var.html</title>
+    <script>
+        // 한 줄 주석
+        /* 
+            범위 주석
+        */
+        console.log("Hello, World!");
+
+        /* 변수 선언 방법 */
+        var a = 10;
+        console.log('a : ' + a);
+
+        b = 20;
+        console.log('b : ' + b);
+
+        let c = 30;
+        console.log('c : ' + c);
+
+        // const는 java의 final 개념
+        const d = 40;
+        console.log('d : ' + d);
+
+    //    console.log(e); // 선언되지 않은 변수라 출력 x
+
+        // var는 재선언 가능함
+        var a = 20;
+        console.log('a : ' + a);
+
+        c = "문자";
+        console.log('c : ' + c);
+        console.log('c : ' + typeof c);
+
+
+        let f = 1;
+        let g ='1';
+        console.log( f == g);  // 값의 비교
+        console.log( f === g); // 값+타입까지 비교
+
+
+        /* 형변환 메소드 */
+        console.log( Number(g) + 2);
+
+
+        /* alert 함수 */
+        console.log("이전");
+        alert("alert\n엔터");
+        console.log("이후");
+
+        /* confirm 함수 */
+        const result1 = confirm("실행?");
+        console.log('result1 : ' + result1);
+
+        /* 백틱 ` */
+        
+         
+
+        
+
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
