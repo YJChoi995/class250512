@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>04_function.html</title>
+    <script>
+        // function 키워드로 함수 선언
+        // 양식 : function 함수명(전달인자들){}
+        // 전달인자에는 타입을 적지 않는다
+
+        function plus(x,y) {
+            console.log('x: ', x);
+            console.log('y: ', y);
+            
+            let z = x + y;
+            return z;
+        }
+
+        let a = plus(2,3); // 실행문
+        console.log('a: ', a);
+
+        let b = plus();
+        console.log('b: ', b); // (결과) b: NaN
+        let c = plus(4);
+        console.log('c: ', c); // (결과) c: NaN
+        let d = plus(4,5,6,7);
+        console.log('d: ', d); // (결과) d: 9
+        
+        // 방어 코딩
+        function plus2(x,y) {
+            if (x == undefined){
+                x = 0;
+            }
+            if (y == undefined){
+                y = 0 ;
+            }
+            if (!x) {
+                x = 0;
+            }
+            if (!y){
+                y = 0 ;
+            }
+            return x + y;
+        }
+
+        console.log(1,2,3,4,5,6);
+        function log( ...obj ){
+            console.log( typeof obj ); // 배열
+            console.log( obj[1] ); // 배열
+            console.log( obj ); // 배열
+        }
+        log(1,2);
+        let e = [10,20];
+        console.log( ...e ); 
+        console.log( e[0], e[1] ); 
+
+        /* eval(문자열) : string을 javascript로 변환 */
+        let f = "console.log(123)";
+        eval(f); 
+
+        // 변수에 함수를 담을 수 있음. 바로 실행도 됨
+        function print(){
+            console.log('print 실행');
+        }
+        let p = print;
+        console.log( 'typeof p :', typeof p );
+        p();
+
+        let p2 = print();
+        console.log('p2 : ', p2);
+
+        console.log( 'typeof print :', typeof print );
+
+        // 함수명이 같으면 덮어쓴다
+        function print2() {
+            console.log('print2 실행');
+        }
+        function print2() {
+            console.log('print3 실행');
+        }
+        print2();
+
+        function over(x){
+            console.log('x : ', x);
+        }
+        function over(x, y){
+            console.log('x, y : ', x, y);
+        }
+        over();
+
+
+
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

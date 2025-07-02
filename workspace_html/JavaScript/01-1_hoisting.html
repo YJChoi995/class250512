@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>01-1_hoisting.html</title>
+    <script>
+        /* 호이스팅 */
+        d = 30; // 호이스팅
+                // 아무것도 안쓴 선언은 최상단으로 호이스팅됨
+        // 선언된 적이 없다 not defined
+        // console.log('a : ', a );
+
+    function test() {
+        if(true) {
+            var b = 10;
+            let c = 20; // java의 지역번수
+            d = 30;
+        }
+        console.log('b : ', b);
+        // console.log('c : ', c); // 선언된 적이 없다
+        console.log('d : ', d); // 호이스팅 발생
+    }
+    test();
+
+
+    
+    </script>
+</head>
+<body>
+
+    
+</body>
+</html>
