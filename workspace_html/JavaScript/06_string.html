@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>06_string.html</title>
+    <script>
+        let str ='오늘 저녁 메뉴?';
+        console.log('str.length: ', str.length);
+
+        /* indexOf */
+        // 전달인자와 동일한 글씨가 있는 경우
+        // 첫번째 만나는 요소의 첫 index를 돌려줌
+        // 동일한 글씨가 없을 경우 -1을 돌려줌
+        console.log( str.indexOf('저녁') );
+
+        /* replace */
+        // 첫번째 전달인자를 두번째 전달인자로 변경함
+        let str2 = str.replace('저녁', '회식');
+        console.log( 'str: ', str );
+        console.log( 'str2: ', str2 );
+
+        let str3 = str.replace(/저녁/g, '회식');
+        console.log( 'str: ', str );
+        console.log( 'str3: ', str3 );
+
+        /* substring */
+        // 시작부터 끝 바로 앞까지
+        let str4 = str.substring(2, 7);
+        console.log( 'str: ', str );
+        console.log( 'str4: ', str4 );
+
+        // 시작부터 몇 개까지
+        let str5 = str.substr(3, 4);
+        console.log( 'str: ', str );
+        console.log( 'str4: ', str4 );
+
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
