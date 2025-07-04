@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>09_dom_contents.html</title>
+</head>
+
+<body>
+    <div id="msg">
+        <span>원래 </span> 있던 글씨 
+    </div>
+
+
+
+    <script>
+        let msg = document.querySelector('#msg');
+        console.log(msg);
+
+
+        /*  */
+
+        // textContent
+        // 컨텐츠 영역의 소스 중 text만 그래도 가져온다
+        console.log('textContent: ', msg.textContent);
+
+        // innerText
+        // 브라우저에 보이는 그대로
+        // 브라우저가 계산을 끝내고 실제로 표시하는 내용
+        console.log('innerText: ', msg.innerText);
+
+        // innerHTML
+        // 컨텐츠 영역의 소스를 모두 가져옴
+        console.log('innerHTML: ', msg.innerHTML);
+
+        // 컨텐츠를 변경해줌
+        // 그런데 tag도 글씨로 인식한다
+        msg.textContent = '<h1>h1제목</h1> a b c';
+        msg.innerText = '<h1>h1제목</h1> a b c';
+        msg.innerHTML = '<h1>h1제목</h1> a b c';
+
+        msg.innerHTML = msg.innerHTML + " d";
+        msg.innerHTML += " e";
+
+
+    </script>
+
+    
+</body>
+</html>

@@ -34,11 +34,82 @@
         let str5 = str.substr(3, 4);
         console.log( 'str: ', str );
         console.log( 'str4: ', str4 );
+    </script>
+</head>
+
+<body>
+    <script>
+        /* 문제 풀기 */
+        console.log('--- 문제 풀기 ---');
+
+        /* 1. 어떤 이메일이라도 id를 추출하도록 */
+        console.log('1. 어떤 이메일이라도 id를 추출하도록: ');
+
+        let mail = 'duswl4759@naver.com';
+        
+        // @(앳) 찾기: indexOf, substring
+        let index = mail.indexOf('@');
+        let id = mail.substring(0, index);
+        console.log('ID 추출하기1: ',  id);
+
+        // @(앳)으로 나눈다 : split
+        let mails = mail.split('@');
+        console.log('ID 추출하기2: ', mails[0]);
+        
+
+        /* 2. 메일 주소 앞 두자리를 제외한 id는 *처리 */
+        // duswl4759@naver.com >> du*******@naver.com
+        let mail2 = 'duswl4759@naver.com';
+
+        let index2 = mail2.indexOf('@');
+        let id2 = mail2.substring(2, index2);
+        let substitution = '*'.repeat(id2.length);
+        let replace2 = mail2.replace(id2, substitution);
+        console.log('2. 메일 주소 앞 두자리를 제외한 id는 *처리: ', replace2);
+
+        // 선생님 답
+        let index_ = mail2.indexOf('@');
+        let id_ = mail2.substring(0, index_);
+
+        let showcnt = 2;
+        let id_2 = mail2.substr(0, showcnt);
+        let count = id_.length - showcnt;
+        for(let i=0; i<count; i++) {
+            id_2 += '*';
+        }
+        id_2 += mail2.substring(index_);
+        console.log('2. 선생님 답: ', id_2);
+
+
+
+        /* 3. 인터넷 주소 중 2차 도메인 출력 */
+        // comic.naver.com >> naver 추출
+        // a.comic.naver.com >> naver 추출
+        console.log('3. 인터넷 주소 중 2차 도메인 출력. comic.naver.com >> naver 추출: ');
+
+        let domain = 'comic.naver.com';
+        
+        // split 사용하기
+        let index3 = domain.split('.');
+        console.log(index3[1]);
+
+        // 선생님 답 : indexOf 사용하기
+        let dot1 = domain.indexOf('.');
+        domain = domain.substring(dot1 + 1);
+        let dot2 = domain.indexOf('.');
+        domain = domain.substring(0, dot2);
+        console.log('3. 선생님 답: ', domain);
+
+
+
+
+        
+       
+       
 
 
     </script>
-</head>
-<body>
+
     
 </body>
 </html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>08_DOM.html</title>
+    <style>
+        #view {
+            color: red;
+        }
+
+        .blue {
+            color: blue;
+        }
+
+        .big {
+            font-size: 2em;
+        }
+
+        [data-food=마라] {
+            color: red;
+        }
+
+
+    </style>
+</head>
+<body>
+    <h1 id="title">DOM 연습</h1>
+
+    <div id="view"> 첫번째 #view</div>
+    <div id="view"> 두번째 #view</div>
+
+    <div class="div2">첫번재 .div2</div>
+    <div class="div2">두번재 .div2</div>
+
+    <!-- css: #parent .div2 -->
+    <div id="parent">
+        <div class="child div2" data-food="마라">안쪽 .div2</div>
+    </div>
+
+    <img src="/장군이.png"
+         alt="크집사님 고양이 장군이">
+
+    <script>
+        // document는 html 문서 전체를 뜻함
+
+        /* getElemetById : */ 
+        //  속성 id의 값을 이용해서 dom을 가져온다
+        let title = document.getElementById('title');
+        console.log(title);
+
+        // 요소가 없는 경우: null
+        let test = document.getElementById('test');
+        console.log(test);
+
+        // 아이디가 중복인 경우 첫번째 태그만 가져온다
+        let view = document.getElementById('view'); 
+
+        
+        /* tag 명으로 DOM 찾기 */
+        // 일치하는 모든 DOM을 배열로 돌려준다
+        let divs = document.getElementsByTagName('div');
+        console.log(divs);
+
+        // 하나만 있어도 배열 만듦
+        let h1s = document.getElementsByTagName('h1');
+        console.log(h1s);
+
+
+        /* class 명으로 DOM 찾기 */
+        let div2s = document.getElementsByClassName('div2');
+        console.log(div2s);
+
+        // 안쪽 클래스 잡을 때
+        let parent = document.getElementById('parent');
+        console.log(parent);
+        let div2ss = parent.getElementsByClassName('div2');
+        console.log(div2ss);
+
+
+        /* querySelector */
+        // css 선택자를 이용할 수 있다
+        /// 하나의 DOM만 반환한다
+        // 여러 개인 경우 처음 나온 DOM 하나만 
+        // 없으면 null 값 반환
+        let qs1 = document.querySelector('#parent .div2');
+        console.log(qs1);
+
+        console.log('-----------------------------------------------');
+
+        let qs2 = document.querySelector('.div2');
+        console.log(qs2);
+
+        let qs3 = document.querySelectorAll('.div2');
+        console.log(qs3);
+
+
+
+        /* class 속성 값 조작 */
+        let child = document.querySelector('#parent .div2');
+        
+        // classList : class를 배열 형식으로 돌려줌
+        console.log(child.classList);
+        
+        // add : 클래스 추가. 
+        child.classList.add('blue');
+        child.classList.add('big');
+        // 중복되서 추가되지는 않는다
+        child.classList.add('big');
+
+        // remove : class 값 삭제
+        child.classList.remove('blue');
+
+        // toggle : 있으면 remove, 없으면 add
+        child.classList.toggle('blue');
+        child.classList.toggle('blue');
+
+        // contain : 값을 가지고 있는지 없는지 (true, false)
+        let isBlue = child.classList.contains('blue');
+        console.log(isBlue);
+
+        // DOM.className : 모든 class를 문자로 돌려줌
+        console.log(child.className);
+        child.className = 'big';
+
+        if(isBlue) {
+            child.classList.remove('big');
+        } else {
+            child.classList.add('big');
+        }
+
+        document.querySelector('[data-food=마라]');
+
+
+        /*  */
+        let img = document.querySelector('img');
+       
+        // 속성명이 있는지 검사 
+        let isSrc = img.hasAttribute('src');
+        console.log('child.isSrc: ', child.isSrc);
+
+        // 속성 값 가져오기
+        let src = img.getAttribute('src');
+        console.log('src: ', src);
+        // 속성이 없으면 null
+        let src2 = img.getAttribute('src2');
+        console.log('src2: ', src2);
+
+        // setAtrribute(속성명, 속성값) 
+        // 속성이 없으면 속성을 맍들고
+        // 속성이 있으면 값을 덮어쓴다
+        img.setAttribute('data-human', '1강의실');
+        img.setAttribute('data-human', '10강의실');
+
+        setTimeout(function(){
+            img.setAttribute('src', '/루루.png')
+        }, 3000
+        )
+
+        // 속성 지우기
+        img.removeAttribute('data-human');
+
+        
+      
+
+
+
+
+
+
+
+
+
+    </script>
+    
+</body>
+</html>
