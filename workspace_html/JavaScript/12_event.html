@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>12_event.html</title>
+    <script src="./esset/12_event.js"></script>
+    <style>
+        body{
+            height: 200vh;
+        }
+
+        #top {
+            position: fixed;
+            right: 10px;
+            bottom : 10px;
+        }
+
+        #game {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
+</head>
+<!-- <body onload = "javascript:init()"> -->
+<body>
+    <div style="display:flex;">
+        <div>
+            <button type="button" id="btn1">버튼1</button><br>
+            <button type="button" id="btn2">버튼2</button><br>
+            <button type="button" id="btn3" onclick="btnClick();">버튼3</button><br>
+            <hr>
+
+            <div>
+                아이디 : <input type="text" id="id"><br>
+                비밀번호 : <input type="password" id="pw"><br>
+                <input type="button" id="login" value="로그인">
+            </div>
+        </div>    
+        <div id="console"></div>
+    </div>
+    <div>
+        <button type="button" id="top">맨 위로</button>
+    </div>
+    <hr>
+
+    <img id="game" src="/Illu_krosmoz.png">
+    
+</body>
+</html>
