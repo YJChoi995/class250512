@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>13_event_mouse.html</title>
+    <script src="./asset/13_event_mouse.js"></script>
+    <style>
+        .mouse {
+            border: 1px solid red;
+            height: 100px;
+            width: 100px;
+            margin: 50px 30px;
+        }
+
+        .wrap {
+            display: flex;
+        }
+
+        #cursor {
+            position: absolute;
+        }
+
+        #drag{
+            position: absolute;
+            margin: 0;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div>
+            <div id="mouse" class="mouse"></div>
+            <div id="drag" class="mouse">drag me</div>
+        </div>
+
+        <div id="view"></div>
+    </div>
+
+    <img id="cursor" src="/portal.png" style="width: 64px; height: 64px;">
+    
+    
+</body>
+</html>

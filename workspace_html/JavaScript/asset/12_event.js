@@ -54,14 +54,12 @@ function bind(){
             console.log('Enter!');
             document.querySelector('#pw').focus();
         }
-
     })
 
     document.querySelector('#pw').addEventListener('keyup', function(event){
         if(event.keyCode == 13) {
             document.querySelector('#login').click();
         }
-
     })
 
     document.querySelector('body').addEventListener('keydown', function(event){
@@ -77,7 +75,11 @@ function bind(){
         }
     })
 
+    document.querySelector('#pw').addEventListener('click', btnClick);
+    document.querySelector('#pw').removeEventListener('click', btnClick);
 }
+
+
 
 function btnClick () {
     const msg = document.getElementById('console');

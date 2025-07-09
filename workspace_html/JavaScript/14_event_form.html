@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>14_event_form.html</title>
+    <script src="asset/14_event_form.js"></script>
+    <style>
+        #pizzatopping {
+            width: 60%;
+            margin-left: 1%;
+            border: 1px solid black;
+            background-color: #9ca0a4;
+            color: #fafafa;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <form id="form" method="get" action="https://search.naver.com/search.naver" target="_blank">
+        <input type="text" id="keyword" name="query" placeholder="검색어를 입력해주세요">
+        <select id="site">
+            <option value="1">네이버</option>
+            <option value="2">구글</option>
+        </select>
+        <button type="submit" style="background-color: #2CB24A; border: 0; color: white;" >검색</button>
+    </form>
+    <hr>
+
+    <strong>문제1. 여러 개의 checkbox가 있을 때, 선택 버튼을 클릭하면 value 값을 따로 아래에 출력하기<br>
+            문제2. 전체 선택 버튼 구현하기<br>
+            문제2-1. 전체 선택 버튼 체크 해제 시 모두 선택 해제 구현하기<br>
+            문제2-2. 전체 선택 후 하나라도 해제되면 전체 선택도 해제<br>
+    </strong>
+    <fieldset id="pizzatopping">   
+        <legend style="color: black; background-color: white;">&lt피자 토핑 지역&gt</legend>
+        <input type="checkbox" class="checkAll" value="전체_선택">전체 선택<br>
+        <input type="checkbox" name="topping" class="check" value="페퍼로니">페퍼로니
+        <input type="checkbox" name="topping" class="check" value="베이컨">베이컨
+        <input type="checkbox" name="topping" class="check" value="치즈">치즈
+        <input type="checkbox" name="topping" class="check" value="파인애플">파인애플
+        <input type="checkbox" name="topping" class="check" value="버섯">버섯
+        <input type="checkbox" name="topping" class="check" value="옥수수">옥수수
+        <br>
+        <hr>
+        <input type="button" value="선택">
+    </fieldset>
+    
+</body>
+</html>
