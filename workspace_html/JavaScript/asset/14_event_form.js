@@ -61,6 +61,7 @@ function bind() {
     })
 
 
+
     /* 피자토핑 문제 풀기 */
     let pizzatopping = document.querySelector('#pizzatopping');
     
@@ -68,14 +69,28 @@ function bind() {
     let checklist = document.querySelectorAll('.check');
     console.log(checklist);
 
+    let show = document.querySelector('.show');
+    let list;
+
     // checkbox가 check되면 console창에 값 표시
     for(let i=0; i<checklist.length; i++){
+        checklist[i].checked = false;
+
         checklist[i].addEventListener('click', function(){
             if(checklist[i].checked == true){
                 console.log(checklist[i].value);
-            }
+                list += checklist[i].value + ' / '; 
+            } 
         })
     }
+    
+    document.querySelectorAll('#choose').addEventListener('click', function(){
+        show.innerHTML += list;
+    })
+
+
+
+    
 
    
     
