@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/portal.png">
+    <title>14-1_quiz.html</title>
+    <style>
+        #quiz {
+            background-color: rgb(255, 170, 170); 
+            width: 60%; border-radius: 3%; 
+            margin: 1%;
+            padding: 1%;
+        }
+        #q1-2, #q3, #q4, #q5, #q6 {
+            border: 5px dotted rgb(63,151,175);
+            
+            background-color: rgb(185,238,255);
+            width: 90%;
+            margin: 1% auto;
+        }
+        .title {
+            padding: 1%;
+            color : rgb(53,97,241);
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .fieldset {
+            display: inline-block;
+            vertical-align: top;
+            border: 1px solid black; 
+            background-color: rgb(240,240,240);
+            width: 45%; 
+            margin: 1%;
+        }
+        legend {
+            background-color: white; 
+            font-weight: bold;
+        }
+    </style>
+    <script src="./asset/14-1_quiz.js"></script>
+</head>
+<body>
+    
+    <fieldset id="quiz">
+        <legend>문제 풀기</legend> 
+        <strong>1번</strong> (완료)<br>
+        신청 버튼 누르면 input의 글씨가 아래에 쌓인다<br>
+        <주문 정보 : 이름+who, 주소+where, 연락처+tell><hr>
+
+        <strong>2번</strong> (완료)<br>
+        주문정보와 같음 버튼을 누르면 주문자의 정보가 배송 정보로 복사됨<br>
+        <배송 정보 : 'ㅁ주문 정보와 같음', 이름, 주소, 연락처><hr>
+
+        <strong>3번</strong><br>
+        메뉴가 여러 개일 때 선택한 메뉴만 특이하게 보이게<hr>
+
+        <strong>4번</strong><br>
+        섬네일 클릭 또는 mouseover 시 큰 크림으로 변경 및 유지<hr>
+
+        <strong>5번</strong><br>
+        피자 주문 시스템<br>
+        사이즈, 토핑, 도우를 선택한 정보, 한 번에 표시<hr>
+
+        <strong>6번 &ltTODO&gt</strong><br>
+        1. 추가 버튼 클릭 : input 내용 추가<br>
+        2. 할일 체크하면 할일글씨 취소선<br>
+        3. 할일 삭제하면 할일 삭제<br>
+        4. 전체 선택 구현<br>
+        5. 전체 취소 구현
+    </fieldset>
+
+    <div id="q1-2">
+        <div class="title">문제 1번 / 2번</div><br>
+        <fieldset class="fieldset">
+            <legend>주문정보</legend>
+            <strong>이름</strong> <input type="text" class="input1" value=""><br>
+            <strong>주소</strong> <input type="text" class="input1" value=""><br>
+            <strong>연락처</strong> <input type="text" class="input1" value=""><br>
+            <input type="button" id="orderbtn" value="신청"><br>
+            <div id="orderResult1"></div>
+        </fieldset>
+        <fieldset class="fieldset">
+            <legend style="background-color: white; font-weight: bold;">배송정보</legend>
+            <input type="checkbox" value="주문 정보와 같음" class="sameCustomer">주문 정보와 같음<br>
+            <strong>이름</strong> <input type="text" class="input2" value=""><br>
+            <strong>주소</strong> <input type="text" class="input2" value=""><br>
+            <strong>연락처</strong> <input type="text" class="input2" value=""><br>
+            <input type="button" id="packagebtn" value="신청">
+            <div id="orderResult2"></div>
+        </fieldset>
+    </div>
+    <div id="q3">
+        <div class="title">문제 3번</div><br>
+    </div>
+    <div id="q4">
+        <div class="title">문제 4번</div><br>
+    </div>
+    <div id="q5">
+        <div class="title">문제 5번</div><br>
+        <fieldset class="fieldset">
+            <legend>피자 주문</legend>
+            <fieldset>
+                <legend>사이즈</legend>
+                <input type="radio" name="pizzasize" value="s">스몰
+                <input type="radio" name="pizzasize" value="m">미디움
+                <input type="radio" name="pizzasize" value="l">라지
+            </fieldset>
+            <fieldset>
+                <legend>토핑</legend>
+                <input type="checkbox" name="topping" class="check" value="페퍼로니">페퍼로니
+                <input type="checkbox" name="topping" class="check" value="베이컨">베이컨
+                <input type="checkbox" name="topping" class="check" value="치즈">치즈
+                <input type="checkbox" name="topping" class="check" value="파인애플">파인애플
+                <input type="checkbox" name="topping" class="check" value="버섯">버섯
+                <input type="checkbox" name="topping" class="check" value="옥수수">옥수수
+            </fieldset>
+            <fieldset>
+                <legend>도우 종류</legend>
+                <select name="dough" size ='1'>
+                    <option value="1" selected>오리지널</option>
+                    <option value="2">씬</option>
+                    <option value="3">치즈롤</option>
+                </select>
+            </fieldset>
+            <input type="button" id="pizzaOrderbtn" value="주문" 
+                   style="background-color: white; border: 1px dotted blue; width: 20%; margin: 2px;">
+         </fieldset>
+
+        <fieldset class="fieldset">
+            <legend>주문 정보</legend>
+            <div id="pizzaOrdered"></div>
+        </fieldset>
+    </div>
+    <div id="q6">
+        <div class="title">문제 6번</div><br>
+        <fieldset class="fieldset">
+            <legend>TO DO LIST</legend>
+            <input type="text" placeholder="할 일을 입력하세요">
+            <input type="button" value="추가">
+            <hr>
+        </fieldset>
+    </div>
+
+
+    
+</body>
+</html>

@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/portal.png">
     <title>14_event_form.html</title>
     <script src="asset/14_event_form.js"></script>
     <style>
@@ -13,6 +14,17 @@
             background-color: #9ca0a4;
             color: #fafafa;
             font-weight: bold;
+        }
+
+        #parent {
+            background-color: yellow;
+            padding: 10px;
+        }
+        #child1 {
+            background-color: #f7da02;
+        }
+        #child2 {
+            background-color: #ff9102;
         }
     </style>
 </head>
@@ -25,6 +37,13 @@
         </select>
         <button type="submit" style="background-color: #2CB24A; border: 0; color: white;" >검색</button>
     </form>
+    <hr>
+
+    <div id="parent">
+        부모
+        <div id="child1">자식1</div>
+        <div id="child2">자식2</div>
+    </div>
     <hr>
 
     <strong>문제1. 여러 개의 checkbox가 있을 때, 선택 버튼을 클릭하면 value 값을 따로 아래에 출력하기<br>
@@ -45,6 +64,6 @@
         <div class="show"> </div>
         <input type="button" id="choose" value="선택">
     </fieldset>
-    
+
 </body>
 </html>
