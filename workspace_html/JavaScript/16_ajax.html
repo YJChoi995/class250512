@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>16_ajax.html</title>
+    <script>
+        window.addEventListener('load', bind)
+        function bind() {
+            document.querySelector('#btn1').addEventListener('click', function(){
+
+                // ajax 객체 생성
+                const xhr = new XMLHttpRequest();
+
+                // 보낼 준비
+                // 방식method, 주소
+                xhr.open('get', 'https://jsonplaceholder.typicode.com/users');
+                
+                // 보내기
+                xhr.send();
+
+                //
+                xhr.onload = function(){
+                    console.log('다녀옴');
+                    // xhr.responseText : 서버에서 응답받은 내용이 담겨있음
+                    console.log('xhr.responseText : ', xhr.responseText);
+                    const data = JSON.parse(xhr.responseText);
+                    console.log(data);
+                    console.log(data[0]);
+                    console.log('data[0].username : ', data[0].username);
+                    console.log('data[0].address.geo.lat : ', data[0].address.geo.lat);
+                }
+            })
+
+            document.querySelector('#btn4').addEventListener('click', function(){
+                // ajax 객체 생성
+                const xhr = new XMLHttpRequest();
+
+                // 보낼 준비 ( 방식method, 주소 )
+                xhr.open('get', 'http://humanjobs.co.kr');
+
+                // 보내기
+                xhr.send();
+
+                //
+                xhr.onload = function(){
+                    console.log(xhr.responseText);
+                }
+            })
+
+            document.querySelector('#btn5').addEventListener('click', function(){
+                const serviceKey = '22AB4Yl8Qc8Mu8G8Q%2Bh%2BAOcbwiDcCOBd3nrSfUFA%2F6jITMoCcJTb3L%2FL34PL2bN7Mc1uO8F%2FlOIQ4TH4iK5zQA%3D%3D';
+                let url = 'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst';
+                url += '?serviceKey=' + serviceKey;
+                url += '&numOfRows=1000';
+                url += '&pageNo=1';
+                url += '&dataType=JSON';
+                url += '&base_date=250714';
+                url += '&base_time=1400';
+                url += '&nx=63';
+                url += '&ny=100';
+
+
+                const xhr = new XMLHttpRequest();
+                xhr.open('get', url);
+                xhr.send();
+                xhr.onload = function(){
+                    console.log(xhr.responseText);
+                    const data = JSON.parse(xhr);
+                    console.log(data);
+                }
+            })
+
+
+        }
+    </script>
+</head>
+<body>
+    <button type="button" id="btn1">AJAX 실행</button>
+    <button type="button" id="btn4">휴먼잡스 실행</button>
+    <button type="button" id="btn5">날씨예보 실행</button>
+    
+</body>
+</html>

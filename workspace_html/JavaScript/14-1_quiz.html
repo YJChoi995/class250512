@@ -67,6 +67,14 @@
             z-index: 0;
         }
 
+        #listField .todo [type=checkbox]:checked + span {
+            text-decoration: line-through;
+        }
+        [type=checkbox]:not(#all){
+            transform: scale(1.3);
+        }
+
+
     </style>
     <script src="./asset/14-1_quiz.js"></script>
 </head>
@@ -188,10 +196,20 @@
         <div class="title">문제 6번</div><br>
         <fieldset class="fieldset">
             <legend>TO DO LIST</legend>
-            <input type="text" placeholder="할 일을 입력하세요" id="todo">
+            <input type="text" id="todo" placeholder="할 일을 입력하세요" >
             <input type="button" id="addbtn" value="추가">
             <hr>
-            <div id="listField"></div>
+            <div>
+                <input type="checkbox" id="all">전체선택
+                <input type="button" value="선택삭제" id="selectDel">
+            </div>
+            <div id="listField">
+                <!-- <div class="todo">
+                    <input type="checkbox" class="check">
+                    <span>할일</span>
+                    <input type="button" value="삭제" class="delbtn">
+                </div> -->
+            </div>
         </fieldset>
     </div>
 

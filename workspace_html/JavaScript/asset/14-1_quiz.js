@@ -1,4 +1,8 @@
-window.addEventListener('load', bind);
+window.addEventListener('load', function(){
+    init();
+    bind();
+});
+function init() {}
 function bind() {
 
     /* 문제 1+2 */
@@ -110,40 +114,64 @@ function bind() {
     
     /* 문제 6.  */
 
-    // '추가' 버튼
-    const addbtn = document.querySelector('#addbtn');
     // 작성한 '할 일' 
     const todo = document.querySelector('#todo');
+    // '추가' 버튼
+    const addbtn = document.querySelector('#addbtn');
     // 작성한 할 일 목록이 생성될 필드
     const listField = document.querySelector('#listField');
-    
+
     
     // '추가'버튼을 누르면 작성한 할 일이 'listField'에 추가됨
     addbtn.addEventListener('click', function(){
         if(todo.value != ''){
             // 체크박스 만들기
-            const workList = document.createElement('input');
-            workList.type = 'checkbox';
-            workList.value = todo.value;
-            workList.className = 'work';
-
-            // 라벨 만들기
-            const label = document.createElement('label');
-            label.appendChild(workList);                 // 체크박스 추가
-            
-            // 줄바꿈
-            const br = document.createElement('br');
-
-            // listField에 추가
-            listField.appendChild(label);
-            listField.appendChild(br);
-    
+            const workList = document.createElement('div');
+            workList.classList.add('todo');
+            workList.innerHTML = `
+                <input type="checkbox" class="check">
+                <span>${todo.value}</span>
+                <input type="button" value="삭제" class="delbtn">`    
             // listField.innerHTML += `<input type="checkbox" value=${todo.value} class="work"> ${todo.value}<br>` ;
+
+            // 출력필드에 '할 일' 추가하기            
+            listField.append(workList);
             
-            // '추가' 버튼을 누르면 입력칸을 초기화
+            // '추가' 버튼을 눌렀을 때 입력칸을 초기화
             todo.value = '';
+
+            // 삭제 버튼을 누르면 '삭제 버튼'이 포함된 
+            // 1. DOM 출력
+            // 2. DOM 지우기
+            workList.querySelector('.delbtn').addEventListener('click', function(event){
+                // event가 발생한 DOM
+                console.log(event.target);
+                // 그 부모
+                console.log(event.target.parentNode);
+                // 그 부모 삭제
+                if(confirm('삭제하시겠습니까?')){
+                    event.target.parentNode.remove();
+                }
+            })
         }
     })
+
+    // '선택삭제' 버튼 누르면 선택된 checkbox 삭제하기
+    document.querySelector('#selectDel').addEventListener('click', function(){
+        // 1. 체크되어 있는 모든 checkbox 가져오기
+        const checked = document.querySelectorAll(`[type=checkbox]:not(#all):checked`);
+        // 2. 부모 지우기
+        for(let i=0; i<checked.length; i++){
+            checked[i].parentNode.remove();
+        }
+        // 3. 같은 부모의 del 버튼 클릭
+        // for(let i=0; i<checked.length; i++){
+        //     checked[i].parentNode.querySelector('.delbtn').click()
+        // }
+    })
+
+
+    
 
     
 
