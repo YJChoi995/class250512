@@ -55,10 +55,10 @@
                 url += '&numOfRows=1000';
                 url += '&pageNo=1';
                 url += '&dataType=JSON';
-                url += '&base_date=250714';
-                url += '&base_time=1400';
+                url += '&base_date=20250715';
+                url += '&base_time=1100';
                 url += '&nx=63';
-                url += '&ny=100';
+                url += '&ny=110';
 
 
                 const xhr = new XMLHttpRequest();
@@ -66,12 +66,90 @@
                 xhr.send();
                 xhr.onload = function(){
                     console.log(xhr.responseText);
-                    const data = JSON.parse(xhr);
+                    const data = JSON.parse(xhr.responseText);
                     console.log(data);
+
+                    let item = data["response"]["body"]["items"]["item"];
+                    let field = document.querySelector('.field');
+                    
+                    for(let i=0; i<item.length; i++){
+                        if(item[i].category == 'T1H'){
+                            console.log(item[i].fcstTime, item[i].fcstValue);
+                            document.querySelector('#tbody1').innerHTML += `
+                                <tr>
+                                    <td>${item[i].fcstTime}</td>
+                                    <td>${item[i].fcstValue}</td>
+                                    <td></td>
+                                    <td></td>
+                                <tr>
+                            `
+                        } else if (item[i].category == 'RN1') {
+                            console.log(item[i].fcstTime, item[i].fcstValue);
+                            document.querySelector('#tbody2').innerHTML += `
+                                <tr>
+                                    <td>${item[i].fcstTime}</td>
+                                    <td></td>
+                                    <td>${item[i].fcstValue}</td>
+                                    <td></td>
+                                <tr>
+                            `
+                        } else if (item[i].category == 'REH') {
+                            console.log(item[i].fcstTime, item[i].fcstValue);
+                            document.querySelector('#tbody3').innerHTML += `
+                                <tr>
+                                    <td>${item[i].fcstTime}</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>${item[i].fcstValue}</td>
+                                <tr>
+                            `
+                        }
+                    }
+
+                    const result = {};
+                    for(let i=0; i<item.length; i++){
+                       
+                        if (!result[item[i].fcstTime]){
+                            result[item[i].fcstTime] = {}
+                        }
+                        if (item[i].category == 'T1H'){
+                            result[item[i].fcstTime].T1H = item[i].fcstValue;
+                        }
+                        if (item[i].category == 'RN1'){
+                            result[item[i].fcstTime].RN1 = item[i].fcstValue;
+                        }
+                        if (item[i].category == 'REH'){
+                            result[item[i].fcstTime].REH = item[i].fcstValue;
+                        }
+                    }
+                    console.log(result);
+                    const tbody10 = document.querySelector('#tbody10');
+                    for(let key in result) {
+                        tbody10.innerHTML += `
+                        <tr>
+                            <td>${key}</td>
+                            <td>${result[key]['T1H']}</td>
+                            <td>${result[key]['RN1']}</td>
+                            <td>${result[key]['REH']}</td>
+                        </tr>
+                        `
+                    }
                 }
             })
 
-
+            document.querySelector('#bnt6').addEventListener('click', function(){
+                const url = 'https://jsonplaceholder.typicode.com/users';
+                const potion = {
+                    method : 'get'
+                }
+                fetch(url, option).then(function(response){
+                    return response.json()
+                }).then(function(data){
+                    console.log(response);
+                }).catch(function(error){
+                    console.log(error);
+                })
+            })
         }
     </script>
 </head>
@@ -79,6 +157,35 @@
     <button type="button" id="btn1">AJAX 실행</button>
     <button type="button" id="btn4">휴먼잡스 실행</button>
     <button type="button" id="btn5">날씨예보 실행</button>
+    <button type="button" id="btn6">fetch</button>
+    <div class="field">
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>시간</th>
+                    <th>온도</th>
+                    <th>강수량</th>
+                    <th>습도</th>
+                </tr>
+            </thead>
+            <tbody id="tbody1"></tbody>
+            <tbody id="tbody2"></tbody>
+            <tbody id="tbody3"></tbody>
+        </table>
+        <hr>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>시간</th>
+                    <th>온도</th>
+                    <th>강수량</th>
+                    <th>습도</th>
+                </tr>
+            </thead>
+            <tbody id="tbody10"></tbody>
+        </table>
+    </div>
+
     
 </body>
 </html>

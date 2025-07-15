@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>18_jQuery.html</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script>
+        $(function(){
+            init();
+        })
+        function init(){
+            const list_h1 = $('h1');
+            console.log( list_h1 );    // jQuery 배열 객체
+            console.log( list_h1[0] ); // 순수(pure) javascript
+
+            console.log( $('#human') ) // 없으면 0개짜리 배열
+
+            // querySelectorAll에 해당
+            // text()는 innerText
+            $('h1').text('싹 다 변경');
+
+            // $('h1').html('<a href="#">a tag</a>'');
+            // html()dms innerHTML에 해당
+            $('h1').html('<a href="javascript:void(0)">a tag</a>')
+
+            /* class 조작 함수 */
+            console.log( $('#parent') );
+
+            // 클래스 추가
+            $('#parent').addClass('c1');
+            $('#parent').addClass('c2');
+
+            // 클래스 제거
+            $('#parent').removeClass('c2');
+
+            // 클래스 있으면 제거, 없으면 추가
+            $('#parent').toggleClass('c2');
+
+            // 클래스를 가지고 있는지 없는지(ture/false)
+            console.log( $('#parent').hasClass('c2') );
+
+
+
+            /* 속성 조작 함수 */
+            // 전달인자가 하나이면 get
+            // getAttribute : 속성의 값 가져오기
+            let human = $('#chk').attr('data-human');
+            console.log(human);
+            // 전달인자가 두개면 set
+            // setAttribute : 속성의 값 부여하기
+            $('#chk').attr('data-human', '123')
+            $('#chk').attr('data-game', '윷놀이')
+            
+            // data() : data-속성명에서 속성명만 사용할 수 있다
+            console.log( $('#chk').data('game') );
+            // 개발자 도구에서 안보이는 속성 추가
+            $('#chk').data('dinner', '찌개');
+            console.log( $('#chk').data('dinner') );
+
+            // removeAttribute : 속성 삭제
+            $('#chk').removeAttr('data-game');
+
+            
+            /* 부모 자식 요소 */
+            // $() 안에 html 태그를 넣으면 createElement 해줌
+            let child2 = $('<div class="child2">자식2</div>');
+            console.log(child2);
+
+            // 자식의 마지막에 요소 추가
+            $('#parent').append(child2);
+            // 자식의 앞에 요소 추가
+            $('#parent').prepend('<div class="class3">자식3</div>');
+
+            // 내용 비우기 : empty()
+            // $('#parent')[0].innerHTML = "";
+            // $('#parent').html('');
+            $('#parent').empty();
+            // 태그 삭제
+            $('#parent').remove();
+            
+
+
+
+        }   
+    
+        
+
+    </script>
+		
+</head>
+<body>
+    <h1>첫번째</h1>
+    <h1>두번째</h1>
+    <h1>세번째</h1>
+
+    <div id="parent">
+        부모
+        <div id="child">자식</div>
+    </div>
+
+    <input type="checkbox" id="chk" class="cb1" value="1" data-human="값" checked="checked"><br>
+    
+</body>
+</html>
