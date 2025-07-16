@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>16_ajax.html</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script>
+        let _contents = [];
+
         window.addEventListener('load', bind)
         function bind() {
             document.querySelector('#btn1').addEventListener('click', function(){
@@ -137,18 +140,106 @@
                 }
             })
 
-            document.querySelector('#bnt6').addEventListener('click', function(){
-                const url = 'https://jsonplaceholder.typicode.com/users';
-                const potion = {
-                    method : 'get'
-                }
-                fetch(url, option).then(function(response){
-                    return response.json()
-                }).then(function(data){
-                    console.log(response);
-                }).catch(function(error){
-                    console.log(error);
+            // document.querySelector('#bnt6').addEventListener('click', function(){
+            //     const url = 'https://jsonplaceholder.typicode.com/users';
+            //     const potion = {
+            //         method : 'get'
+            //     }
+            //     fetch(url, option).then(function(response){
+            //         return response.json()
+            //     }).then(function(data){
+            //         console.log(response);
+            //     }).catch(function(error){
+            //         console.log(error);
+            //     })
+            // })
+
+            $('#btn7').off('click').on('click', function(){
+                $.ajax({
+                    url: 'https://jsonplaceholder.typicode.com/users',
+                    type: 'get',
+                    success: function(data){
+                        // 성공했을 때
+                        // json일 경우 알아서 json으로 넘어옴
+                        console.log(data);
+                    },
+                    error: function(data){
+                        // 실패했을 때
+                        console.log(data);
+                    },
+                    complete: function(data){
+                        // 성공/실패 유무 관계없이 무조건 출력
+                        console.log(data);
+                    }
                 })
+            })
+
+            try {
+                console.log(1, '실행');
+                throw new Error('에러');
+                console.log(2, '여전히 실행 중');
+            } catch (err) {
+                console.log(3, 'catch');
+                console.log(4, err);
+            } finally {
+                console.log(5, '무조건 실행');
+            }
+
+            $('#btn8').on('click', function(){
+                $.ajax({
+                    url: 'https://naver.com',
+                    type: 'get'
+                }).done(function(data){
+                    console.log('성공');
+                    console.log(data);
+                }).fail(function(data){
+                    console.log('실패');
+                    console.log('ERROR', data);
+                }).always(function(data){
+                    console.log('무조건 실행');
+                })
+            })
+
+            $('#btn9').on('click', function(){
+                let msg = $('#msg').val().replace(/\n/g, '%0a');
+                $.ajax({
+                    url: 'https://api.telegram.org/bot8111524809:AAH5zLT-Y5JClBCxs1bg2vpOHk6qbf6BgWo/sendMessage?chat_id=7575993538&text='+msg,
+                    type: 'get'
+                })
+            })
+
+            $('#btn10').on('click', function(){
+                let msg2 = $('#msg2').val()
+                const key = 'AIzaSyBjGaOYOd87FF2fhfWngeWC_FPDKgduKLQ';
+                const url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key='+ key;
+                _contents.push({
+                    role: 'user',
+                        parts: [{
+                            text: msg2
+                        }]
+                })
+                const data = {
+                    contents: _contents
+                }
+
+                const xhr = new XMLHttpRequest();
+                xhr.open('post', url);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.send(JSON.stringify(data));
+                xhr.onload = function(){
+                    console.log(xhr.responseText);
+                    const response = JSON.parse(xhr.responseText);
+                    const answer = response.candidates[0].content.parts[0].text;
+                    $('#gemini').html( answer.replace(/\n/g, '<br>') );
+
+                    _contents.push({
+                    role: 'model',
+                        parts: [{
+                            text: answer
+                        }]
+                })
+                }
+        
             })
         }
     </script>
@@ -158,6 +249,18 @@
     <button type="button" id="btn4">휴먼잡스 실행</button>
     <button type="button" id="btn5">날씨예보 실행</button>
     <button type="button" id="btn6">fetch</button>
+    <button type="button" id="btn7">jQuery 실행</button>
+    <button type="button" id="btn8">jQuery 실행2</button>
+    <hr>
+        <textarea id="msg"></textarea>
+        <button type="button" id="btn9">텔레그램 메세지 보내기</button>
+    <hr>
+        <textarea id="msg2"></textarea>   
+        <button type="button" id="btn10">Gemini에게 물어보기</button>
+        <div id="gemini"></div>
+
+    <hr>     
+    
     <div class="field">
         <table border="1">
             <thead>
