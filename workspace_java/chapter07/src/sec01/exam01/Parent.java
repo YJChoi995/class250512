@@ -10,5 +10,13 @@ public class Parent {
 		System.out.println("Parent의 getName 실행");
 		return this.name;
 	}
+	
+	/* 생성자 */
+//	Parent() {
+//		System.out.println("Parent 생성자");
+//	}
 
+	Parent(int a) {
+		System.out.println("Parent 생성자");
+	}
 }
