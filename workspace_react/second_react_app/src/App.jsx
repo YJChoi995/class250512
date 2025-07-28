@@ -7,35 +7,39 @@ import {Paper, List, Container} from '@mui/material';
 import AddTodo from './Components/AddTodo';
 
 function App() {
-  const [items, setItems] = useState([{
-    id: "0",
-    title: "Sample Todo1",
-    done: true // 할 일 완료된 상태
-  },
-  {
-    id: "1",
-    title: "Sample Todo2",
-    done: false
-  },
-  {
-    id: "2",
-    title: "Sample Todo3",
-    done: false
+  const [items, setItems] = useState([]);
+
+  // item 상태를 업테이트 하는 함수
+  const addItems=(item)=>{
+    item.id="ID-" + Date.now(); // key를 위한 id
+    item.done=false; // done 상태는 false로 초기화
+
+    const newItems = [...items, item];
+    setItems(newItems); 
+    console.log('newItems: ', newItems);
   }
 
-]);
+  // 아이템 삭제 함수
+  const deleteItem=(item)=>{
+    // 삭제 전 확인 알림창 표시
+    const confirmDelete = window.confirm("삭제하시겠습니까?");
 
-  const addItems=(item) => {
-    item.id="ID-" + items.length; // key를 위한 id
-    item.done=false; // done 상태는 false로 초기화
-    setItems([...items, item]); // 기존 items에 새 item 추가
-    console.log('items: ', items);
+    if(confirmDelete){
+      //삭제할 아이템
+      const newItems = items.filter((e) => e.id !== item.id); 
+
+      const updateItems = [...newItems]; 
+      setItems(updateItems); // 상태 업데이트
+      console.log("updateItems : ", updateItems);
+    }
   }
 
   let todoItems = items.length > 0 &&
   <Paper style={{margin:16, boxShadow: '0 5px 8px rgba(0,0,0,0.5)'}}>
     <List>
-      {items.map((item)=>(<Todo item = {item} key = {item.id}/>))}
+      {items.map((item)=>(
+        <Todo item = {item} key = {item.id} deleteItem={deleteItem}/> 
+      ))}
     </List>
   </Paper>
    
