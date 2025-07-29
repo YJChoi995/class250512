@@ -34,14 +34,20 @@ function App() {
     }
   }
 
-  let todoItems = items.length > 0 &&
+  const editItem = () => {
+    setItems([...items]) // 변경된 내용을 리렌더링
+    // 새 배열을 만들어서 React에게 상태가 바뀌었다고 알리는 역할
+  }
+
+  let todoItems = items.length > 0 && (
   <Paper style={{margin:16, boxShadow: '0 5px 8px rgba(0,0,0,0.5)'}}>
     <List>
       {items.map((item)=>(
-        <Todo item = {item} key = {item.id} deleteItem={deleteItem}/> 
+        <Todo item = {item} key = {item.id} editItem={editItem} deleteItem={deleteItem}/> 
       ))}
     </List>
   </Paper>
+  )
    
   return (
     // <div className="App">{todoItems}</div>
