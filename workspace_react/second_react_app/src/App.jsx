@@ -14,8 +14,10 @@ function App() {
 
   // item 상태를 업테이트 하는 함수
   const addItems = (item) => {
+    // 타임스탬프를 사용하여 고유 ID 생성
     item.id="ID-" + Date.now(); // key를 위한 id
     item.done=false; // done 상태는 false로 초기화
+    item.priority = 'low'; // 우선순위 초기값 생성
 
     const newItems = [...items, item];
     setItems(newItems); 

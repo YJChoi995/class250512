@@ -4,9 +4,8 @@ import RestoreIcon from '@mui/icons-material/Restore';
 
 function TrashPage(props) {
     // 삭제 아이템
-    // 복원 함수
-
     const deletedItems = props.deletedItems; // 부모 컴포넌트에서 전달된 삭제된 아이템 목록
+    // 복원 함수
     const restoreItem = props.restoreItem; // 부모 컴포넌트에서 전달된 복원 함수
 
     return(
