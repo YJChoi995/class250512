@@ -51,7 +51,8 @@ public class OrderExam {
 			MemberDTO dto = (MemberDTO)list.get(i);
 			System.out.println(dto.age);
 		}
-	
+		
+		System.out.println(m1.toString());
 		
 	}
 }

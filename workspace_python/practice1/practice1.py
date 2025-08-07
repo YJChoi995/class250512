@@ -121,3 +121,5 @@ def functionC(a,b,c):
 print(functionC(2,3,4))
 
 # 함수 안에서 다른 함수를 선언 할 수 있다
+
+print("2025-08-06".split("-"))
