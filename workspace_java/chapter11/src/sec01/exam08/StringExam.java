@@ -101,7 +101,40 @@ public class StringExam {
 		String result2 = visible2 + masking2 + domain2;
 		System.out.println(result2);
 		
-
+		
+		
+		/* trim() : 앞뒤 공백을 자름 */
+		String s5 = "   글씨   중간공백   ";
+		System.out.println("[" + s5 + "]");
+		System.out.println("[" + s5.trim() + "]");
+		
+		/* split() : 문자열을 잘라서 배열로 만듦 */
+		String menu = "김밥,라면,돈까스,제육덮밥";
+		String menus[] = menu.split(",");
+		for (String m : menus) {
+			System.out.println(m);
+		}
+		
+		String url = "blog.naver.com";
+		// split은 정규 표현식을 사용(String이 아님에 주의!)
+	    // .(닷, 온점)은 정규 표현식에서 사용하는 의미있는 예약어라서 문자 .(온점)으로 인식하지 못한다
+	    // “\\.", "[.]" 로 사용할 수 있다
+		String urls[] = url.split("\\.");
+		System.out.println(urls.length);
+		
+		/* StringBuffer : 메모리를 효율적으로 사용한다 */
+		// 쓰레드에 안전하다
+		StringBuffer sb = new StringBuffer("a");
+		sb.append("b");
+		sb.append("c");
+		String d = sb.toString();
+		System.out.println(d);
+		/* StringBuilder */
+		// 쓰레드에 안전하지 않다
+		StringBuilder sbb = new StringBuilder("a");
+		sbb.append("b");
+		String d2 = sbb.toString();
+		System.out.println(d2);
 		
 	}
 
