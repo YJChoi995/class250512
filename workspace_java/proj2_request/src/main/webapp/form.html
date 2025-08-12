@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>parameter 연습</title>
+</head>
+<body>
+	<h1>parameter 연습</h1>
+<!-- 	<form method="get" action="http://localhost:8080/proj2_request/req"> -->
+<!-- 	<form method="get" action="/proj2_request/req"> -->
+	<form method="get" action="req">
+		num1 : <input type="text" name="num1" value="abcd"><br>
+		pw : <input type="password" name="pw"><br>
+		<input type="checkbox" name="check" value="check1">체크1
+		<input type="checkbox" name="check" value="check2">체크2
+		<input type="checkbox" name="check" value="check3">체크3<br>
+		
+		<input type="hidden" name="hidden1" value="hival">
+
+		<!-- button : 버튼은 값이 전달되지 않음 -> 서버용X, 사용자용 -->
+		<input type="button" name="btn1" value="btn11">
+		<button type="button" name="btn2" value="btn22">button</button><br>
+		
+		<input type="radio" name="radio1" value="r1" checked>라디오1
+		<input type="radio" name="radio1" value="r2">라디오2
+		<input type="radio" name="radio1" value="r3">라디오3
+		<input type="radio" name="radio1" value="r4">라디오4<br>
+		
+		<input type="date" name="date1" value="2025-08-12"><br>
+		<input type="number" name="number1" value="123" style="display: none"><br>
+		
+		<div name="div1" value="div11">div: form요소가 아님</div>
+		
+		<select name="select1" value="select11">
+			<option value="op1">옵션1</option>
+			<option value="op2">옵션2</option>
+			<option value="op3">옵션3</option>
+			<option value="op4">옵션4</option>
+		</select><br>
+		
+		<textarea name="textarea1" value="textarea1"></textarea><br>
+		
+		
+		<input type="submit" value="get 전송">
+	</form>
+	
+	<form method="post" action="req">
+		<input type="number" name="num2">
+		
+		<input type="submit" value="post 전송">
+	</form>
+
+</body>
+</html>
