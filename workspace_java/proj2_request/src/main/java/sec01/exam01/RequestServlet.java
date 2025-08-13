@@ -12,6 +12,12 @@ public class RequestServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("/req doGet 실행");
+		
+		// 요청할 때 한글 깨짐 방지
+		request.setCharacterEncoding("utf-8;");
+		// 응답할 때 한글 깨짐 방지
+		response.setContentType("text/html; charset=utf-8;");
+		
 
 		// getParameter(). 전달받은 파라미터의 key값을 적어서 해당 값을 얻어오기
 		String num1 = request.getParameter("num1");
