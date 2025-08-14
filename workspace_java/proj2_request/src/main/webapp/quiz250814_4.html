@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<style>
+		input[type="submit"] {
+			width: 200px;
+			color: white;
+			text-weight: bold;
+			background-color: green;
+		}
+	</style>
+</head>
+<body>
+	<h1>피자 메뉴 선택</h1>
+	
+	<form method="get" action="quiz250814_4">
+		<strong>메뉴 선택</strong>
+		<select name="menu" value="select1">
+			<option value="고구마 피자">고구마 피자</option>
+			<option value="메이플 베이컨 피자">메이플 베이컨 피자</option>
+			<option value="불고기 피자">불고기 피자</option>
+			<option value="치즈 피자">치즈 피자</option>
+			<option value="페퍼로니 피자">페퍼로니 피자</option>
+		</select><br>
+		
+		<strong>사이즈 선택</strong>
+		<input type="radio" name="size" value="레귤러" checked>레귤러
+		<input type="radio" name="size" value="라지">라지<br>
+		
+		<strong>토핑 선택</strong>
+		<input type="checkbox" name="topping" value="베이컨 추가">베이컨 추가
+		<input type="checkbox" name="topping" value="블랙 올리브 추가">블랙 올리브 추가
+		<input type="checkbox" name="topping" value="체다 치즈 추가">체다 치즈 추가
+		<input type="checkbox" name="topping" value="칠리 새우 추가">칠리 새우 추가
+		<input type="checkbox" name="topping" value="페퍼로니 추가">페퍼로니 추가
+		<input type="checkbox" name="topping" value="할라피뇨 추가">할라피뇨 추가<br>
+		
+		<strong>요청 사항(선택)</strong>
+		<input type="textarea" name="textarea""><br>
+		
+		<input type="submit" value="주문">
+		
+	</form>
+
+</body>
+</html>

@@ -14,7 +14,7 @@ public class RequestServlet extends HttpServlet {
 		System.out.println("/req doGet 실행");
 		
 		// 요청할 때 한글 깨짐 방지
-		request.setCharacterEncoding("utf-8;");
+		request.setCharacterEncoding("utf-8");
 		// 응답할 때 한글 깨짐 방지
 		response.setContentType("text/html; charset=utf-8;");
 		
