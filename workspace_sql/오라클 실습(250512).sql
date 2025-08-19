@@ -1503,3 +1503,44 @@ select * from EMP;
 desc EMP;
 
 desc DEPT;
+
+
+/* 250818(월) */
+/* java + DB 연결 연습 */
+create table tbl_todo (
+     tno number primary key,
+     title varchar2(4000) not null,
+     dueDate date,
+     finished number(1) default 0
+);
+
+select * from tbl_todo;
+
+create sequence seq_tbl_todo;
+
+insert into tbl_todo (tno, title, duedate, finished)
+values (seq_tbl_todo.nextval, '연습1', null, 0);
+
+insert into tbl_todo (tno, title, duedate, finished)
+values (seq_tbl_todo.nextval, '연습2', '2025-08-19', 0);
+
+insert into tbl_todo (tno, title, duedate, finished)
+values (seq_tbl_todo.nextval, '연습3', to_date('2025-08-19', 'yyyy-mm-dd'), 0);
+
+commit;
+
+
+/* 250819(화) */
+delete tbl_todo where tno = 21; 
+
+commit;
+
+select * from tbl_todo where tno = 33;
+
+update tbl_todo set title = '바꾸기', 
+                    duedate = '2025-01-01',
+                    finished = 1
+where tno = 33;
+
+commit;
+                    
