@@ -1543,4 +1543,16 @@ update tbl_todo set title = '바꾸기',
 where tno = 33;
 
 commit;
+
+
+/* 250820(수) */
+create table emp2 as select * from emp;
+
+select * from emp2;
+
+delete emp2 where empno = 7934;
+
+commit;
+
+
                     

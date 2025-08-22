@@ -21,7 +21,7 @@ public class TodoController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("/todo의 doGet 실행");
 		
-		// 한글 깨지 방지
+		// 한글 깨짐 방지
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
 		
