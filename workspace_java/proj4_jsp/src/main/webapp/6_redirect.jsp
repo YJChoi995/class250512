@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,11 +9,9 @@
 	<title>Insert title here</title>
 </head>
 <body>
-c:url<br>
-사용 이유<br>
-1. 영어나 숫자 외 한글이나 특수문자를 encoding 해줌<br>
-2. context path 자동 추가(/proj4_jsp)
-
+	<c:redirect url="session">
+		<c:param name="id" value="id1234" />
+	</c:redirect>
 
 </body>
 </html>

@@ -19,18 +19,23 @@ public class SetCookie extends HttpServlet {
 		
 		// 만료일이 있는 쿠키
 		Cookie c1 = new Cookie("addr", "천안시");
-//		c1.setMaxAge(60 * 60 * 24); // 초단위
-		c1.setMaxAge(10); // 초단위
+		c1.setMaxAge(60*60*24); // 초단위
+//		c1.setMaxAge(10); // 초단위
 		response.addCookie(c1);
 		
-	}
-
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 한글 깨짐 방지
-		request.setCharacterEncoding("utf-8");
-		response.setContentType("text/html; charset=utf-8");
-
+		// 만료일이 없는 쿠키
+		// 세션쿠키
+		// setMaxAge를 설정하지 않거나
+		// setMaxAge(-1) 음수로 설정한다
+		// 브라우저 메모리에만 저장된다
+		// 즉, 모든 탭을 끄면 사라진다
+		Cookie c2 = new Cookie("dinner", "회");
+		c2.setMaxAge(-1);
+		response.addCookie(c2);
+		
+		Cookie c3 = new Cookie("showPopup", "N");
+		c3.setMaxAge(12);
+		response.addCookie(c3);
 	}
 
 	
