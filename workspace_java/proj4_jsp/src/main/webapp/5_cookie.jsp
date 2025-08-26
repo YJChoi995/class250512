@@ -57,10 +57,7 @@
 				if(name == 'noShow' && value == 'true'){
 					document.querySelector('.popup').classList.add('hide');
 				}
-				
 			}
-			
-			
 		}
 	</script>
 </head>

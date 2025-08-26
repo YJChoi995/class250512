@@ -53,11 +53,7 @@ public class OracleDBCPServlet extends HttpServlet {
 				String ename = rs.getString("ENAME");
 				System.out.println(ename);
 				out.println(ename);
-				
-				
-				
 			}
-			
 			rs.close();
 			ps.close();
 			conn.close(); // 커넥션 풀로 반환
