@@ -1554,5 +1554,33 @@ delete emp2 where empno = 7934;
 
 commit;
 
+/* 250827(수) */
+select * from (
+    select rownum rnum, t1.* from (
+        select emp2.* from emp2
+        order by hiredate desc
+    ) t1
+) t2
+where rnum >= 3 and rnum <= 6;
 
-                    
+truncate table emp2;
+
+INSERT INTO emp2 (empno, ename, job, mgr, hiredate, sal, comm, deptno)
+SELECT 
+    e.empno + lvl AS empno,
+    lvl || '_' || e.ename AS ename,
+    e.job, 
+    e.mgr,
+    e.hiredate + lvl AS hiredate,
+    e.sal + lvl AS sal,
+    e.comm, 
+    e.deptno
+FROM emp e
+JOIN (
+    SELECT LEVEL AS lvl 
+    FROM dual 
+    CONNECT BY LEVEL <= 20
+) l
+ON 1=1;
+
+commit;
