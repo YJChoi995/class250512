@@ -32,7 +32,7 @@
 	    type="javax.sql.DataSource"
 	    driverClassName="oracle.jdbc.driver.OracleDriver"
 	    url="jdbc:oracle:thin:@125.181.132.133:51521:xe"
-	    username="scott4_2"
+	    username="J2P4"
 	    password="tiger"
 	    maxTotal="50"
 	    maxWaitMillis="-1"
