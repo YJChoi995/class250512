@@ -14,7 +14,8 @@
 <!-- 	<form method="post" action="join3"> -->
 <!-- 	<form method="post" action="join4"> -->
 <!-- 	<form method="post" action="join5"> -->
-	<form method="post" action="join6">
+<!-- 	<form method="post" action="join6">  -->
+	<form method="post" action="join11">
 		아이디 : <input type="text" name="id"><br>
 		비밀번호 : <input type="password" name="pw"><br>
 		이름 : <input type="text" name="name"><br>
