@@ -47,6 +47,11 @@ public class EmpDAOImpl implements EmpDAO {
 	
 	@Override
 	public List selectEmpno(int empno) {
+		return sqlSession.selectList("mapper.emp.selectEmpno", empno);
+	}
+	
+	@Override
+	public EmpDTO selectOneEmpno(int empno) {
 		return sqlSession.selectOne("mapper.emp.selectEmpno", empno);
 	}
 	
@@ -55,5 +60,68 @@ public class EmpDAOImpl implements EmpDAO {
 		System.out.println("ename: " + ename);
 		return sqlSession.selectList("mapper.emp.selectEname", ename);
 	}
+	
+	@Override
+	public List selectEmpnoEname(EmpDTO dto) {
+		return sqlSession.selectList("mapper.emp.selectEmpnoEname", dto);
+	}
+	
+	@Override
+	public int insertEmp2(EmpDTO dto) {
+		System.out.println("dto: "+ dto);
+		int result = sqlSession.insert("mapper.emp.insertEmp2", dto);
+		return result;
+	}
 
+	@Override
+	public int updateEmp2(EmpDTO dto) {
+		System.out.println("dto: "+ dto);
+		
+		int result = sqlSession.insert("mapper.emp.updateEmp2", dto);
+		return result;
+	}
+
+	@Override
+	public int deleteEmp2(EmpDTO dto) {
+		System.out.println("dto: "+ dto);
+		int result = sqlSession.insert("mapper.emp.deleteEmp2", dto);
+		return result;
+	}
+	
+	
+	// java로 구형
+	private void testSeq(EmpDTO dto) {
+		
+		// 1. insert 전에 seq 따오기
+		int seq_empno = sqlSession.selectOne("mapper.emp.getSeqEmp2");
+		
+		// 2. dto에 저장하기
+		dto.setEmpno(seq_empno);
+		
+		// 3. 활용하기 (2군데 이상 동일한 empno 전달 가능)
+		sqlSession.insert("mapper.emp.insertEmp2345", dto); // empno 유지
+		sqlSession.insert("mapper.emp.insertEmp9876", dto); // empno 유지
+	}
+	
+	// 실무편: selectKey 사용
+	private void testSeq2(EmpDTO dto) {
+		
+		// 내부에서 seq를 따서 setEmpno로 dto에 저장함
+		sqlSession.insert("mapper.emp.insertEmp3", dto);
+		// 얕은 복사라서 현재 줄의 dto에도 empno가 저장되어 있음
+		// 그래서 재사용 가능함
+		
+		sqlSession.insert("mapper.emp.insertEmp9876", dto); // empno 유지
+	}
+	
+	// 조건으로 검색
+	@Override
+	public List<EmpDTO> selectEmp(EmpDTO dto) {
+		List<EmpDTO> resultList = null;
+		
+		resultList = sqlSession.selectList("mapper.emp.dynamic.selectEmp", dto);
+		System.out.println("resultList: " + resultList);
+		
+		return resultList;
+	}
 }

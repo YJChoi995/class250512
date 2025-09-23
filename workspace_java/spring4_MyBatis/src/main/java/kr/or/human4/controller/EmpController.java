@@ -65,5 +65,71 @@ public class EmpController {
 		return "emp";
 	}
 	
+	@RequestMapping("/getEmpnoEname")
+	public String getEmpnoEname(Model model, EmpDTO dto) {
+		List list = empService.getEmpnoEname(dto);
+		
+		model.addAttribute("list", list);
+		return "emp";
+	}
+	
+	@RequestMapping("/joinEmp2")
+	public String joinEmp2(Model model, EmpDTO dto) {
+		int result = empService.joinEmp2(dto);
+		System.out.println("회원 가입 결과: " + result);
+		
+		return "redirect:/listEmp";
+	}
+	
+	// 상세 조회 by empno
+	@RequestMapping("/empDetail")
+	public String empDetail(Model model, int empno) {
+		
+		EmpDTO empDTO = empService.getOneEmpno(empno);
+		model.addAttribute("empDTO", empDTO);
+		
+		return "detail";
+	}
+	
+	// 회원 가입 페이지로 이동
+	@RequestMapping("/join")
+	public String join() {
+		return "join";
+	}
+	
+	// 수정 페이지로 이동
+	@RequestMapping("/modify")
+	public String modify(Model model, EmpDTO dto) {
+		EmpDTO empDTO = empService.getOneEmpno(dto.getEmpno());
+		model.addAttribute("empDTO", empDTO);
+		
+		return "modify";
+	}
+	
+	// 수정 후 목록으로
+	@RequestMapping("/modifyEmp")
+	public String modifyEmp(Model model, EmpDTO dto) {
+		int result = empService.modifyEmp2(dto);
+		System.out.println("회원 수정 결과: "+ result);
+		
+		return "redirect:/listEmp";
+	}
+	
+	@RequestMapping("/removeEmp")
+	public String removeEmp(Model model, EmpDTO dto) {
+		int result = empService.removeEmp2(dto);
+		System.out.println("회원 삭제 결과: "+ result);
+		
+		return "redirect:/listEmp";
+	}
+	
+	@RequestMapping("/search")
+	public String search(Model model, EmpDTO dto) {
+		List<EmpDTO> list = empService.selectEmp(dto);
+		
+		model.addAttribute("list", list);
+		
+		return "emp";
+	}
 
 }
