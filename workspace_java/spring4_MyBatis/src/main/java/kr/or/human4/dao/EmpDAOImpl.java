@@ -124,4 +124,11 @@ public class EmpDAOImpl implements EmpDAO {
 		
 		return resultList;
 	}
+	
+	
+	@Override
+	public List<EmpDTO> foreach(EmpDTO dto) {
+		return sqlSession.selectList("mapper.emp.dynamic.foreach", dto);
+	}
+	
 }

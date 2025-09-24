@@ -23,7 +23,16 @@
 <!--	</div> -->
 	<div>
 		<form method="get" action="search">
+		
+		
 			<select name="type">
+				<c:if test="${empDTO.type eq 1 }">
+					<option value="1" selected="selected">ename</option>
+				</c:if>
+				<c:if test="${empDTO.type eq 1 }">
+					<option value="1">ename</option>
+				</c:if>
+				
 				<option value="1">ename</option>
 				<option value="2">job</option>
 				<option value="3">ename and job</option>
@@ -33,34 +42,40 @@
 			<input type="submit" value="검색">
 		</form>
 	</div>
-
 	<hr>
 	<div>
 		<a href="join"><button type="button">회원 가입</button></a>
 	</div>
-	<table border=1>
-		<tr>
-			<th>EMPNO</th>
-			<th>ENAME</th>
-			<th>SAL</th>
-			<th>JOB</th>
-		</tr>
-		<c:if test="${empty list}">
+	<hr>
+	<form method="get" action="choice">
+		<table border=1>
 			<tr>
-				<td colspan="4"> 조회 내역이 없습니다</td>
+				<th>선택</th>
+				<th>EMPNO</th>
+				<th>ENAME</th>
+				<th>SAL</th>
+				<th>JOB</th>
 			</tr>
-		</c:if>
-		<c:if test="${not empty list}">
-			<c:forEach var="empDTO" items="${list }">
+			<c:if test="${empty list}">
 				<tr>
-					<td>${empDTO.empno }</td>
-					<td><a href="empDetail?empno=${empDTO.empno }">${empDTO.ename }</a></td>
-					<td>${empDTO.sal }</td>
-					<td>${empDTO.job }</td>
-				</tr>	
-			</c:forEach>
-		</c:if>
-	</table>
-
+					<td colspan="5"> 조회 내역이 없습니다</td>
+				</tr>
+			</c:if>
+			<c:if test="${not empty list}">
+				<c:forEach var="empDTO" items="${list }">
+					<tr>
+						<td>
+							<input type="checkbox" name="empnos" value="${empDTO.empno }">						
+						</td>
+						<td>${empDTO.empno }</td>
+						<td><a href="empDetail?empno=${empDTO.empno }">${empDTO.ename }</a></td>
+						<td>${empDTO.sal }</td>
+						<td>${empDTO.job }</td>
+					</tr>	
+				</c:forEach>
+			</c:if>
+		</table>
+		<input type="submit" value="선택 조회">
+	</form>
 </body>
 </html>

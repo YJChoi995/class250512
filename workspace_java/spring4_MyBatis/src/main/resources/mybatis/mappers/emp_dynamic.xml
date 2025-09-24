@@ -53,6 +53,16 @@
 				</otherwise>
 			</choose>
 		</where>
-	
+	</select>
+	 
+	<select id="foreach" resultType="empDTO" parameterType="empDTO">
+		select * from emp2
+<!-- 		where empno in (1,2,3,4) -->
+		<where>
+			empno in
+			<foreach item="item" collection="empnos" open="(" separator="," close=")">
+				#{item} 
+			</foreach>
+		</where>
 	</select>
 </mapper>

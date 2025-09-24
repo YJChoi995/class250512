@@ -90,6 +90,12 @@ public class EmpServiceImpl implements EmpService {
 		return empDAO.selectEmp(dto);
 	}
 	
+	@Override
+	public List<EmpDTO> foreach(EmpDTO dto) {
+		
+		return empDAO.foreach(dto);
+	}
+	
 	
 
 }
