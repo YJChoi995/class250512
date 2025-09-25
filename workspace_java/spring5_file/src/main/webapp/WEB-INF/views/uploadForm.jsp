@@ -6,11 +6,21 @@
 	<title>Insert title here</title>
 </head>
 <body>
-	
+
+	<h3>파일 하나</h3>	
 	<form method="post" action="upload" enctype="multipart/form=data" accept-charset="utf-8">
 		제목 : <input type="text" name="title"><br>
 		내용 : <input type="text" name="content"><br>
 		파일 첨부 : <input type="file" name="file1"><br>
+		
+		<input type="submit" value="등록">
+	</form>
+	<hr>
+	<h3>파일 한 번에 여러개 </h3>	
+	<form method="post" action="uploads" enctype="multipart/form=data" accept-charset="utf-8">
+		제목 : <input type="text" name="title"><br>
+		내용 : <input type="text" name="content"><br>
+		파일 첨부 : <input type="file" name="file1" multiple="multiiple"><br>
 		
 		<input type="submit" value="등록">
 	</form>
